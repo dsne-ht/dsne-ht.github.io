@@ -314,13 +314,42 @@
 .edl-scope .date-tag {font-size:.6rem;color:rgba(255,255,255,.35);display:block;margin-top:1px}
 /* MAP */
 .edl-scope .map-section {background:white;border-bottom:2px solid var(--cream-dark)}
-.edl-scope .map-header {padding:.9rem 3rem .6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.edl-scope .map-header {padding:.9rem 3rem .6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .edl-scope .map-header h3 {font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#0a5f6b}
 .edl-scope .map-legend {display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
 .edl-scope .leg-item {display:flex;align-items:center;gap:.35rem;font-size:.68rem;color:var(--muted)}
 .edl-scope .leg-dot {width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .edl-scope .map-note {font-size:.62rem;color:var(--muted);font-style:italic;padding:.3rem 3rem .7rem}
-.edl-scope #map {height:420px;width:100%;z-index:1}
+.edl-scope #map {height:520px;width:100%;z-index:1}
+/* MAP SEARCH */
+.edl-scope .map-search-bar {padding:.5rem 3rem .75rem;display:flex;align-items:center;gap:.6rem;background:white}
+.edl-scope .map-results-count {font-size:.7rem;color:var(--muted);font-style:italic}
+.edl-scope .map-search-wrap {position:relative;flex:1;max-width:420px}
+.edl-scope .map-search-input {width:100%;padding:.42rem .75rem .42rem 2.1rem;border:1.5px solid var(--border);border-radius:5px;font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;color:var(--text);background:white;outline:none;transition:border-color .15s}
+.edl-scope .map-search-input:focus {border-color:#0a5f6b;box-shadow:0 0 0 3px rgba(10,95,107,.1)}
+.edl-scope .map-search-icon {position:absolute;left:.6rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.85rem;pointer-events:none}
+.edl-scope .map-search-clear {position:absolute;right:.5rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:.9rem;line-height:1;padding:0;display:none}
+.edl-scope .map-search-clear.visible {display:block}
+.edl-scope .map-search-results {position:absolute;top:calc(100% + 4px);left:0;right:0;background:white;border:1.5px solid var(--border);border-radius:5px;box-shadow:0 4px 16px rgba(0,0,0,.1);max-height:220px;overflow-y:auto;z-index:800;display:none}
+.edl-scope .map-search-results.open {display:block}
+.edl-scope .msr-item {padding:.52rem .75rem;cursor:pointer;border-bottom:1px solid #f0ebe2;display:flex;align-items:center;gap:.6rem;transition:background .12s}
+.edl-scope .msr-item:last-child {border-bottom:none}
+.edl-scope .msr-item:hover,.edl-scope .msr-item.focused {background:#eaf6f7}
+.edl-scope .msr-name {font-size:.8rem;font-weight:600;color:var(--text);flex:1}
+.edl-scope .msr-uas {font-size:.65rem;color:white;padding:1px 6px;border-radius:3px;flex-shrink:0}
+.edl-scope .msr-empty {padding:.75rem;font-size:.78rem;color:var(--muted);text-align:center;font-style:italic}
+/* RICH POPUP */
+.map-popup {font-family:'IBM Plex Sans',sans-serif;min-width:240px;max-width:310px;font-size:12px}
+.map-popup .mp-name {font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:#0a3f4a;line-height:1.2;margin-bottom:3px}
+.map-popup .mp-type {font-size:10px;color:#888;margin-bottom:6px}
+.map-popup .mp-divider {border:none;border-top:1px solid #e5dfd3;margin:6px 0}
+.map-popup .mp-row {display:flex;gap:6px;margin-bottom:4px;align-items:flex-start;line-height:1.45}
+.map-popup .mp-lbl {font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#999;width:58px;flex-shrink:0;padding-top:1px}
+.map-popup .mp-val {font-size:11px;color:#333;flex:1}
+.map-popup .mp-status {display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;margin-top:4px}
+.map-popup .status-actif {background:#e6f4ec;color:#1e6e3e}
+.map-popup .status-nf {background:#fce8e4;color:#b8341b}
+.map-popup .mp-services {font-size:10.5px;color:#444;line-height:1.5;margin-top:3px}
 /* MAIN */
 .edl-scope .main {max-width:1200px;margin:0 auto;padding:2.5rem 3rem 5rem}
 .edl-scope .section {margin-bottom:3.5rem}
@@ -540,6 +569,18 @@
       <span class="leg-item"><span class="leg-dot" style="background:#b8341b;width:14px;height:14px;border:2px solid #fff;box-shadow:0 0 0 1px #b8341b"></span>Hôpital</span>
     </div>
   </div>
+  <!-- MAP SEARCH BAR -->
+  <div class="map-search-bar">
+    <div class="map-search-wrap">
+      <input type="text" id="mapSearchInput" class="map-search-input"
+             placeholder="Rechercher une institution ou commune…"
+             autocomplete="off"
+             oninput="mapSearch(this.value)">
+      <span class="map-search-icon" id="mapSearchIcon">🔍</span>
+      <button class="map-search-clear" id="mapSearchClear" onclick="mapSearchClear()" title="Effacer">✕</button>
+    </div>
+    <span class="map-results-count" id="mapResultsCount">41 institutions · cliquez un marqueur pour les détails</span>
+  </div>
   <div id="map"></div>
   <p class="map-note">Sources cartographiques : OpenStreetMap · SISNU/MSPP Cartographie Sanitaire Nationale (cartesanitaire.sisnu.net) · OCHA Haiti Reference Map, Nord-Est, 25 mars 2024 · Coordonnées approximatives — la carte nécessite une connexion internet pour charger les tuiles.</p>
 </div>
@@ -755,11 +796,85 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 
 /* ═══ MAP ═══ */
 let leafletMap=null;
+let mapMarkers=[];
 const UAS_COLORS={'Fort-Liberté':'#1a3a6b','Ouanaminthe':'#2d6a3f','Trou-du-Nord':'#7a3a0c','Hors UAS':'#555555'};
 const HOSP_TYPES=['Hôpital Départemental','Hôpital Communautaire de Référence','CMS / Hôpital'];
 
+function buildPopup(inst){
+  const isNF=inst.statut==='Non fonctionnel';
+  const statusHtml=isNF
+    ?`<span class="mp-status status-nf">Non fonctionnel</span>`
+    :`<span class="mp-status status-actif">Actif</span>`;
+  const partner=inst.partenaire&&inst.partenaire!=='—'?inst.partenaire:'—';
+  const services=inst.services&&inst.services!=='À compléter'?inst.services:'—';
+  const rh=inst.rh&&inst.rh!=='À compléter'?inst.rh:'—';
+  const dm=inst.dm?inst.dm:'—';
+  const svcShort=services.length>130?services.slice(0,130)+'…':services;
+  const rhShort=rh.length>110?rh.slice(0,110)+'…':rh;
+  return `
+    <div class="map-popup">
+      <div class="mp-name">${esc(inst.nom)}</div>
+      <div class="mp-type">${esc(inst.type)} · ${esc(inst.commune)}</div>
+      <hr class="mp-divider">
+      <div class="mp-row"><span class="mp-lbl">UAS</span><span class="mp-val"><strong>${esc(inst.uas)}</strong></span></div>
+      <div class="mp-row"><span class="mp-lbl">Statut</span><span class="mp-val">${statusHtml}</span></div>
+      <div class="mp-row"><span class="mp-lbl">DM</span><span class="mp-val">${esc(dm)}</span></div>
+      <div class="mp-row"><span class="mp-lbl">Partenaire</span><span class="mp-val">${esc(partner)}</span></div>
+      <hr class="mp-divider">
+      <div style="font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#999;margin-bottom:4px">Services</div>
+      <div class="mp-services">${esc(svcShort)}</div>
+      ${rh!=='—'?`<div style="font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#999;margin-top:6px;margin-bottom:4px">Ressources humaines</div><div class="mp-services">${esc(rhShort)}</div>`:''}
+    </div>`;
+}
+
+function norm2(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+
+function mapSearch(q){
+  const clearBtn=document.getElementById('mapSearchClear');
+  const countEl=document.getElementById('mapResultsCount');
+  const trimmed=q.trim();
+  if(!trimmed){
+    clearBtn.classList.remove('visible');
+    mapMarkers.forEach(({marker})=>marker.setStyle({opacity:1,fillOpacity:0.85}));
+    countEl.textContent='41 institutions · cliquez un marqueur pour les détails';
+    return;
+  }
+  clearBtn.classList.add('visible');
+  const nq=norm2(trimmed);
+  let matches=0,firstMatch=null;
+  mapMarkers.forEach(({marker,inst})=>{
+    const hay=norm2(inst.nom+' '+inst.commune+' '+inst.uas+' '+inst.type);
+    const hit=hay.includes(nq);
+    if(hit){
+      marker.setStyle({opacity:1,fillOpacity:1,weight:2.5});
+      marker.setZIndexOffset(1000);
+      matches++;
+      if(!firstMatch)firstMatch=marker;
+    } else {
+      marker.setStyle({opacity:0.15,fillOpacity:0.1,weight:1});
+      marker.setZIndexOffset(0);
+    }
+  });
+  if(matches===1&&firstMatch){
+    leafletMap.setView(firstMatch.getLatLng(),13,{animate:true});
+    firstMatch.openPopup();
+  } else if(matches>1&&firstMatch){
+    leafletMap.setView(firstMatch.getLatLng(),11,{animate:true});
+  }
+  countEl.innerHTML=matches
+    ?`<strong>${matches}</strong> résultat${matches>1?'s':''}`
+    :`<span style="color:#b8341b">Aucun résultat</span>`;
+}
+
+function mapSearchClear(){
+  const input=document.getElementById('mapSearchInput');
+  const clearBtn=document.getElementById('mapSearchClear');
+  if(input){input.value='';clearBtn.classList.remove('visible');mapSearch('');input.focus();}
+}
+
 function initMap(){
   if(leafletMap){leafletMap.remove();leafletMap=null}
+  mapMarkers=[];
   leafletMap=L.map('map',{zoomControl:true}).setView([19.52,-71.90],10);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
     attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | MSPP/SISNU',
@@ -770,21 +885,13 @@ function initMap(){
     const color=UAS_COLORS[inst.uas]||'#555';
     const isHosp=HOSP_TYPES.includes(inst.type);
     const isNF=inst.statut==='Non fonctionnel';
-    const radius=isHosp?11:7;
+    const radius=isHosp?12:7;
     const marker=L.circleMarker([inst.lat,inst.lng],{
-      radius,color:'white',weight:isHosp?2:1.5,
+      radius,color:'white',weight:isHosp?2.5:1.5,
       fillColor:isNF?'#aaa':color,fillOpacity:isNF?0.4:0.85
     }).addTo(leafletMap);
-    marker.bindPopup(`
-      <div style="font-family:'IBM Plex Sans',sans-serif;font-size:12px;min-width:200px">
-        <strong style="color:#0c1f3f;font-size:13px">${inst.nom}</strong><br>
-        <span style="color:#888;font-size:10px">${inst.type} · ${inst.commune}</span><br>
-        <hr style="margin:5px 0;border-color:#e5dfd3">
-        <span style="font-size:10px;color:#555">UAS : <strong>${inst.uas}</strong></span><br>
-        <span style="font-size:10px;color:${isNF?'#b8341b':'#2d7a4f'};font-weight:600">${inst.statut}</span><br>
-        ${inst.partenaire&&inst.partenaire!=='—'?`<span style="font-size:10px;color:#555">Partenaire : ${inst.partenaire}</span>`:''}
-      </div>
-    `,{maxWidth:280});
+    marker.bindPopup(buildPopup(inst),{maxWidth:320});
+    mapMarkers.push({marker,inst});
   });
 }
 
@@ -1822,318 +1929,6 @@ window.addEventListener('load',initMap);
   Direction Sanitaire du Nord-Est &nbsp;·&nbsp; Ministère de la Santé Publique et de la Population &nbsp;·&nbsp; Fort-Liberté, Haïti
 </footer>
 
-<!-- ═══ EDL SCRIPT ═══ -->
-<script>
-
-/* ═══ DATA ═══ */
-const DEFAULTS = {
-  periode:"2025–2026",
-  population:"430 925 habitants",
-  institutions:[
-    {id:1,nom:"Hôpital Départemental de Fort-Liberté (HFL)",type:"Hôpital Départemental",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"Consultation générale, CPN/CPoN, pédiatrie, odontologie, orthopédie, chirurgie, médecine interne, labo, urgences, maternité, VIH, pharmacie, morgue, santé communautaire",rh:"2 sonographistes · 1 urgentiste · 2 ophtalmologues · 1 odontologue · 2 médecins famille · 5 généralistes · 6 personnels surface",partenaire:"MDM Argentine",statut:"Actif",sourceDate:"Liste DM/ADM DSNE; EDL-PPS/2025 (Juin 2025)",lat:19.667,lng:-71.833,dm:"Dr Henry Claude Etienne"},
-    {id:2,nom:"CDAI Fort-Liberté",type:"Centre Spécialisé",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"À compléter",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"Liste DM/ADM DSNE",lat:19.668,lng:-71.836,dm:"Dr Brunel Augustin"},
-    {id:3,nom:"CCS Dérac",type:"CCS",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"Consultation générale, CPN/CPoN, sonographie, accouchement, santé communautaire, malaria, TB, nutrition",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.651,lng:-71.879,dm:"Dr Rivelino Joseph"},
-    {id:4,nom:"CCS Meillac",type:"CCS",uas:"Fort-Liberté",commune:"Meillac",services:"Consultation générale, CPN/CPoN, labo, sonographie, accouchement, santé communautaire, malaria, TB, urgences",rh:"2 chauffeurs · 1 sage-femme",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.580,lng:-71.921,dm:"Dr Francisque Severe"},
-    {id:5,nom:"CCS Mérande",type:"CCS",uas:"Fort-Liberté",commune:"Ferrier",services:"Consultation générale, CPN/CPoN, labo, sonographie, accouchement, santé communautaire, urgences",rh:"1 ménagère · 1 gardien · 1 technicien labo · 1 archiviste · 1 régisseur",partenaire:"Ma Santé mes Droits (2025–2032)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.585,lng:-71.685,dm:"Dr Magalie Surling Dasny"},
-    {id:6,nom:"CS Ferrier",type:"CS",uas:"Fort-Liberté",commune:"Ferrier",services:"Consultation générale, CPN/CPoN, labo, sonographie, accouchement, santé communautaire, malaria, TB, urgences, nutrition",rh:"3 sages-femmes · 2 spécialistes (gynéco + pédiatre) · 3 généralistes · 4 infirmières · 2 chauffeurs · 2 ménagères",partenaire:"Ma Santé mes Droits (2025–2032)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.582,lng:-71.682,dm:"Dr Luckens Pierre"},
-    {id:7,nom:"CS Acul Samedi",type:"CS",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"Consultation générale, CPN/CPoN, labo, sonographie, accouchement, santé communautaire, malaria, TB, urgences",rh:"1 chauffeur · 2 sécurités · 1 archiviste · 1 régisseur · 4 ASCP · 1 nutritionniste · 2 chefs cuisines",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.627,lng:-71.858,dm:"Dr Anegard Joseph"},
-    {id:8,nom:"CS Perches",type:"CS",uas:"Fort-Liberté",commune:"Perches",services:"Consultation générale, CPN/CPoN, labo, sonographie, accouchement, pharmacie, santé communautaire",rh:"Personnel insuffisant (vacants : 1 sage-femme, 1 technologiste, 1 médecin, 1 administrateur, 1 agent sécurité)",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.383,lng:-71.817,dm:"Dr Vincent Mecejour"},
-    {id:9,nom:"CS Vallières",type:"CS",uas:"Fort-Liberté",commune:"Vallières",services:"Consultation générale, observation, CPN/CPoN, maternité, médecine interne, PF, vaccination, nutrition, TB, malaria, labo, pharmacie, urgences, épidémiologie",rh:"1 sage-femme · 1 technicien labo · 1 comptable · 1 secrétaire · 4 ASCP · 2 AIP",partenaire:"GIRADEL / CARE (Déc. 2025–Mars 2026)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.467,lng:-71.983,dm:"Dr Frantz-Elucien Joseph"},
-    {id:10,nom:"CMS Ouanaminthe (CMSO)",type:"CMS / Hôpital",uas:"Ouanaminthe",commune:"Ouanaminthe",services:"Urgences, maternité, SOP, chirurgie, santé communautaire, nutrition, PF, consultation générale, labo, pharmacie, médecine interne, VIH, TB, radiologie, sonographie, morgue",rh:"4 sages-femmes · 1 infirmière spécialiste · spécialiste santé com. · 20 ASCP · 2 AIP · 1 chauffeur · 2 motocyclistes",partenaire:"MDM Argentine (reprise Mars 2026) · Ma Santé mes Droits",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.550,lng:-71.733,dm:"Dr Jhon Cador Joseph"},
-    {id:11,nom:"CS Capotille",type:"CS",uas:"Ouanaminthe",commune:"Capotille",services:"Urgences, consultation générale, CPN/CPoN, accouchement, vaccination, nutrition, PF, labo, PTME, VIH/TB, pharmacie, santé communautaire",rh:"1 médecin de service · 1 sage-femme · 1 gardien · 1 ménagère",partenaire:"MDM Argentine · CARITAS Espagne · Ma Santé mes Droits",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.450,lng:-71.617,dm:"Dr Adrien Felix"},
-    {id:12,nom:"CMS Mont-Organisé (CMSMO)",type:"CMS",uas:"Ouanaminthe",commune:"Mont-Organisé",services:"Santé communautaire, PF, consultation générale, nutrition, labo, urgences, maternité, CPN, TB, hospitalisation, pharmacie",rh:"4 médecins · 6 infirmières · 2 technologistes · 1 archiviste · 2 sages-femmes · 2 sécurités · 1 chauffeur · 3 ASCP",partenaire:"MDM Argentine · Ma Santé mes Droits (2025–2032)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.367,lng:-71.917,dm:"Dr Margarette Titus"},
-    {id:13,nom:"CCS Lamine",type:"CCS",uas:"Ouanaminthe",commune:"Ouanaminthe",services:"Consultation générale, CPN/CPoN, santé communautaire, PF, pharmacie",rh:"1 médecin · 2 infirmières · 1 technicien labo · 2 gardiens · 1 agent sécurité · 4 ASCP",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.522,lng:-71.750,dm:"Dr Enese Desanges"},
-    {id:14,nom:"CS Acul des Pins",type:"CS",uas:"Ouanaminthe",commune:"Ouanaminthe",services:"Urgences, PF, nutrition, labo, consultation générale, vaccination, pharmacie, maternité, CPN/CPoN, santé communautaire",rh:"1 médecin de service · 1 échographiste · 1 caissière · 1 archiviste · 1 technologiste médical · 2 ASCP",partenaire:"Save The Children · Mercy Corps",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.540,lng:-71.740,dm:"Dr Ricardo Joseph"},
-    {id:15,nom:"CS Gens de Nantes",type:"CS",uas:"Ouanaminthe",commune:"Ouanaminthe",services:"Consultation générale, CPN/CPoN, accouchement, santé communautaire, nutrition, labo, TB, pharmacie",rh:"2 infirmières · 1 technicien labo · 2 ASCP",partenaire:"Save The Children",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.535,lng:-71.757,dm:"Dr Cloridor Joachim"},
-    {id:16,nom:"CS Savane au Lait",type:"CS",uas:"Ouanaminthe",commune:"Ouanaminthe",services:"Urgences, consultation générale, vaccination, PF, CPN/CPoN, accouchement, nutrition, pharmacie, santé communautaire",rh:"1 médecin de service · 1 infirmière · 1 technologiste labo · 1 archiviste · 2 ASCP · 1 motocycliste",partenaire:"Mercy Corps · GIRADEL / CARE",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025) — accouchement ajouté Mar. 2026",lat:19.510,lng:-71.720,dm:"Dr Mikenly Philogene"},
-    {id:17,nom:"CCS Savane Longue",type:"CCS",uas:"Ouanaminthe",commune:"Ouanaminthe",services:"Consultation générale, CPN/CPoN, santé communautaire, nutrition, labo, pharmacie",rh:"1 médecin · 1 administrateur · 1 sage-femme · 3 ASCP",partenaire:"Mercy Corps",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.505,lng:-71.715,dm:"Dr Andy Paul"},
-    {id:18,nom:"CS Dilaire",type:"CS",uas:"Ouanaminthe",commune:"Ouanaminthe",services:"Urgences, CPN, pédiatrie, consultation générale, observation, hospitalisation, accouchement, vaccination, PF, labo, radiographie, échographie, nutrition, ECG, santé communautaire",rh:"4 médecins · 1 échographiste · 2 sages-femmes · 2 ménagères · 2 archivistes · 2 caissières · 1 technologiste · 1 chauffeur · 1 sécurité · 9 ASCP · 2 motocyclistes",partenaire:"Mercy Corps",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.530,lng:-71.762,dm:"Dr Roselande Jules"},
-    {id:19,nom:"CS Rose Bonite",type:"CS",uas:"Ouanaminthe",commune:"Capotille",services:"Consultation générale, CPN/CPoN, santé communautaire, vaccination, nutrition, malaria, PF, urgences",rh:"Carence importante — vacants : 4 infirmières, 6 ASCP, 2 technologistes, 2 archivistes, 1 aide pharmacien, 1 chauffeur",partenaire:"MDM Argentine (cliniques mobiles)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.460,lng:-71.670,dm:"Dr Nachemy Mea"},
-    {id:20,nom:"CS Bois Poux",type:"CS",uas:"Ouanaminthe",commune:"Capotille",services:"À compléter",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"Liste DM/ADM DSNE",lat:19.440,lng:-71.630,dm:"À compléter"},
-    {id:21,nom:"CS Carice",type:"CS",uas:"Ouanaminthe",commune:"Carice",services:"Consultation générale, CPN/CPoN, maternité, médecine interne, PF, vaccination, nutrition, TB, VIH, malaria, labo, pharmacie, urgences, épidémiologie, santé communautaire",rh:"2 médecins généralistes · 1 sage-femme · 2 techniciens labo · 2 sécurités · 3 ASCP · 2 AIP",partenaire:"Ma Santé mes Droits (2025–2032)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.383,lng:-71.850,dm:"Dr Lyonel Maxime"},
-    {id:22,nom:"CS Corosse (Capotille)",type:"CS",uas:"Ouanaminthe",commune:"Capotille",services:"—",rh:"—",partenaire:"C2C (Care 2 Communities) — partenariat à venir",statut:"Non fonctionnel",sourceDate:"EDL Départemental, Nov. 2025 · C2C entrant (2026)",lat:19.420,lng:-71.650,dm:"À compléter"},
-    {id:23,nom:"HCR Trou-du-Nord",type:"Hôpital Communautaire de Référence",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"Urgences, gynéco-obstétrique, CPN/CPoN, médecine interne, pédiatrie, chirurgie générale, SOP, sonographie, radiographie, labo, pharmacie, vaccination, PF, VIH, TB, nutrition, odontologie, santé communautaire",rh:"Vacants critiques : 2 chirurgiens, 3 internistes, 1 orthopédiste, 1 urologue, 2 gynécologues, 8 ASCP, 6 ménagères, 6 brancardiers, 2 sages-femmes",partenaire:"CMMB · ISPD · BID/IDB · OMS (IHAB)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.617,lng:-72.017,dm:"Dr Jude Achille Dorsainvil"},
-    {id:24,nom:"CS Terrier Rouge",type:"CS",uas:"Trou-du-Nord",commune:"Terrier Rouge",services:"Consultation générale, labo, hospitalisation, VIH/ARV, PEV, PF, pharmacie, TB, santé maternelle et infantile, urgences",rh:"Manque : techniciens labo, ménagères, superviseur ASCP, sages-femmes",partenaire:"BID · ISPD · PNLT · GIRADEL/CARE · Ma Santé mes Droits",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.567,lng:-72.083,dm:"Dr Abnel Benjamin"},
-    {id:25,nom:"CS Pilette",type:"CS",uas:"Trou-du-Nord",commune:"Terrier Rouge",services:"Consultation générale, pharmacie, labo, observations, urgences, santé communautaire, PF, nutrition, vaccination, malaria",rh:"Vacants : 2 sécurités, 1 secrétaire, 2 archivistes, 1 caissier, 2 sages-femmes, 1 dentiste, 2 résidents",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.555,lng:-72.075,dm:"Dr Gelande-Shamir Laroche"},
-    {id:26,nom:"CS Jacquezyl",type:"CS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"Santé communautaire, PF, soins maternels, consultation générale, VIH/SIDA, TB, malaria, labo, échographie, urgences, observations, pharmacie",rh:"2 ASCP · Vacants : 2 agents sécurité, 2 médecins, 1 chauffeur, 1 technicien, 1 échographiste",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.610,lng:-72.030,dm:"Dr Fredo Dorvil"},
-    {id:27,nom:"CS NDL Grand Bassin",type:"CS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"À compléter",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"Liste DM/ADM DSNE",lat:19.625,lng:-72.072,dm:"À compléter"},
-    {id:28,nom:"CS Leroux Cachiman",type:"CS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"Consultation générale, pharmacie, labo, santé maternelle, CPN/CPoN, PF, nutrition, malaria, vaccination, santé communautaire",rh:"Vacants : 8 ASCP, 1 superviseur, 2 lab/tech, 1 agent sécurité, 1 gardien, 1 sage-femme, 1 secrétaire",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.602,lng:-72.023,dm:"Dr Jacques-Antoine Jean-Louis"},
-    {id:29,nom:"CS Roche Plate",type:"CS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"Consultation générale, pharmacie, labo, santé maternelle, CPN/CPoN, PF, nutrition, malaria, TB, vaccination, SSR, santé communautaire",rh:"ASCP et LabTech insuffisants",partenaire:"C2C (Care 2 Communities)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025) · EDL Annexe 1, Nov. 2025",lat:19.573,lng:-72.102,dm:"À compléter"},
-    {id:30,nom:"CCS Grosse Roche (TDN)",type:"CCS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"Santé communautaire, consultation générale, CPN/CPoN, pédiatrie, labo, accouchement SOS, malaria, urgences",rh:"Tous postes à recruter — bâtiment restreint",partenaire:"GIRADEL / CARE",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.552,lng:-72.098,dm:"Dr Sam Edwige Valcimond"},
-    {id:31,nom:"CS Caracol",type:"CS",uas:"Trou-du-Nord",commune:"Caracol",services:"Consultation générale, vaccination, PF, pharmacie, nutrition, malaria, TB, santé communautaire",rh:"Vacants : 2 sages-femmes, 2 médecins, 4 infirmières, 1 technicien labo, 4 agents santé, 1 échographiste",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.533,lng:-71.950,dm:"Dr Samuel Jean-Baptiste"},
-    {id:32,nom:"CS Cahesse",type:"CS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"À compléter",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"Liste DM/ADM DSNE",lat:19.560,lng:-72.052,dm:"Dr Romel Mentor"},
-    {id:33,nom:"CS Sainte-Suzanne",type:"CS",uas:"Trou-du-Nord",commune:"Sainte-Suzanne",services:"Consultation générale, pédiatrie, CPN/CPoN, PF, vaccination, labo, nutrition, TB, malaria, pharmacie, accouchement, observation, santé communautaire",rh:"Vacants : 2 archivistes, 2 aide pharmaciens, 2 gardiens, 3 médecins, 1 sonographiste",partenaire:"GIRADEL / CARE (Déc. 2025–Mars 2026)",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.650,lng:-72.133,dm:"Dr Suzanne Joseph"},
-    {id:34,nom:"CS Danda",type:"CS",uas:"Trou-du-Nord",commune:"Sainte-Suzanne",services:"À compléter",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"Liste DM/ADM DSNE",lat:19.632,lng:-72.120,dm:"Dr Edwine Augustin"},
-    {id:35,nom:"CS Dupity",type:"CS",uas:"Trou-du-Nord",commune:"Sainte-Suzanne",services:"Consultation générale, pédiatrie, CPN/CPoN, PF, vaccination, labo, nutrition, TB, pharmacie, malaria, accouchement, observation, santé communautaire",rh:"Vacants : 1 sage-femme, 1 médecin, 1 échographiste, 1 pharmacien, 1 chauffeur, 1 sécurité, 1 dentiste",partenaire:"—",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.642,lng:-72.128,dm:"Dr Julianie Dalusma"},
-    {id:36,nom:"CS Phaéton",type:"CS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"À compléter",rh:"À compléter",partenaire:"GIRADEL / CARE (Déc. 2025–Mars 2026)",statut:"Actif",sourceDate:"Liste DM/ADM DSNE",lat:19.590,lng:-72.080,dm:"Dr Jean Baptiste Desir"},
-    {id:40,nom:"CS Corosse (Trou-du-Nord)",type:"CS",uas:"Trou-du-Nord",commune:"Trou-du-Nord",services:"À compléter",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"EDL Départemental, Nov. 2025 — opérationnel (distinct du CS Corosse Capotille)",lat:19.565,lng:-72.090,dm:"À compléter"},
-    {id:37,nom:"CS Mombin-Crochu",type:"CS (niveau avancé)",uas:"Hors UAS",commune:"Mombin-Crochu",services:"Consultation générale, CPN/CPoN, maternité, médecine interne, hospitalisation, PF, vaccination, nutrition, TB, VIH, malaria, labo, odontologie, chirurgie (en cours), sonographie, radiographie (en cours), pharmacie, urgences, épidémiologie",rh:"Vacants critiques : chirurgien, pédiatre, interniste, gynécologue, anesthésiste, dentiste, 4 généralistes, 2 sages-femmes, 1 radiologiste · 5 ASCP add., 2 AIP add.",partenaire:"GIRADEL / CARE",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025) · Rattachement UAS à régulariser",lat:19.417,lng:-72.083,dm:"Dr Miles Cherenfant"},
-    {id:38,nom:"CS Bois de Laurence",type:"CS",uas:"Hors UAS",commune:"Mombin-Crochu",services:"Consultation générale, CPN/CPoN, santé communautaire, PF, vaccination, nutrition, TB, VIH, malaria, labo, urgences, épidémiologie, archives, pharmacie",rh:"2 médecins de service · 1 sage-femme · 1 comptable · 1 secrétaire · 4 ASCP · 4 AIP · 1 motocycliste · 1 chauffeur",partenaire:"GIRADEL / CARE · Ma Santé mes Droits",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025) · Rattachement UAS à régulariser",lat:19.432,lng:-72.070,dm:"Dr Renaud Gerve"},
-    {id:39,nom:"CCS Grosse Roche (Hors UAS)",type:"CCS",uas:"Hors UAS",commune:"Mombin-Crochu",services:"Santé communautaire, consultation générale, CPN/CPoN, pédiatrie, labo, accouchement SOS, malaria, urgences",rh:"Tous postes à recruter",partenaire:"GIRADEL / CARE",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025) · Rattachement UAS à régulariser",lat:19.437,lng:-72.075,dm:"Dr Sam Edwige Valcimond"},
-  ],
-  partenaires:[
-    {nom:"Médecins du Monde (MdM) Argentine",domaine:"SMI · Nutrition · Choléra · Formation · Cliniques mobiles zones frontalières",zones:"CMSO, CMSMO, CS Capotille, HFL",periode:"Mars 2023 – Jan. 2026 (reprise prévue Mars 2026)",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"Save The Children",domaine:"Protection (RFEO) · Santé/Nutrition/SRR · WASH · Assistance monétaire · Projet MAPLE",zones:"Ouanaminthe : Acul-des-Pins, Gens de Nantes, Centre-ville",periode:"Nov. 2024 – Déc. 2025 (extension en cours)",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"GIRADEL / CARE",domaine:"Nutrition · Sécurité alimentaire · Cash for Works · Formation ASCP · Démonstrations culinaires · 4 tranches de cash inconditionnel",zones:"Sainte-Suzanne, Terrier Rouge, Vallières, Mombin-Crochu, Bois de Laurence, Phaéton, Grosse Roche, Corosse — 1 300 bénéficiaires",periode:"Déc. 2025 – Mars 2026",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"Mercy Corps",domaine:"Nutrition · Formation ANJE / PCMAG · Assistance logistique · Incitatif ASCP · 2 ASCP/zone",zones:"Ouanaminthe : Savane Longue, Savane au Lait, Dilaire, Acul-des-Pins",periode:"Août 2025 – Fév. 2026 (extension)",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"Ma Santé mes Droits / Sante Mwen Dwa Mwen",domaine:"Santé maternelle · VBG · Réhabilitation · Réaménagement · Formation · Santé communautaire · Population délimitée / prestataires MSPP",zones:"CCS Ferrier · CCS Meillac · CCS Mérande · CS Ouanaminthe (CMSO) · CS Capotille · CS Mont-Organisé · CS Carice (8 institutions officiellement retenues)",periode:"2025 – 2032",saisie:"Liste IS officielle Ma Santé mes Droits · EDL Annexe 1, Nov. 2025"},
-    {nom:"CMMB",domaine:"Santé mère-enfant · VIH · Renforcement clinique",zones:"HCR Trou-du-Nord",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"C2C (Care 2 Communities)",domaine:"Mise en œuvre clinique directe — gestion complète du centre",zones:"CS Roche-Plate (UAS Trou-du-Nord)",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"ISPD",domaine:"Support nutrition · SMI · VIH · Renforcement programme · Évaluation préliminaire 24 institutions",zones:"Terrier Rouge, Ouanaminthe, Mont-Organisé",periode:"Processus en cours (évalué Feb. 2026)",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"Croix Rouge Haïtienne / OIM",domaine:"Premiers secours · Support psychologique · Migrants · Formation 6 volontaires RLF",zones:"Frontière Ouanaminthe",periode:"Jan. 2026 – Jan. 2027",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"CARITAS Espagne + Mamos Unidas",domaine:"Santé · Cliniques mobiles (2/mois) · Formation MA et SSR · Personnel de soin",zones:"Ouanaminthe, Capotille, Trou-du-Nord, Welch, Barrière Battant",periode:"2023–2026 / 2025–2026",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"BID / IDB",domaine:"Financement réforme · Accès services essentiels — département",zones:"CS Terrier Rouge · Département",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"FONHARE",domaine:"Réadaptation · Physiothérapie",zones:"Ouanaminthe",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"Danita's Children Medical Center",domaine:"Clinique pédiatrique · Imagerie · Labo · Pharmacie",zones:"Ouanaminthe",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"UNICEF",domaine:"Vaccins PEV · Intrants · Logistique · Nutrition (achat intrants + appui technique)",zones:"Département",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"OMS / OPS",domaine:"Appui technique · Normes · Supervision PEV · IHAB Trou-du-Nord",zones:"Département",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"PAM / AMURT",domaine:"Santé scolaire · Distribution Albendazole dans les écoles",zones:"Écoles du département",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
-    {nom:"CRS",domaine:"Nutrition",zones:"À confirmer",periode:"Rendez-vous à prendre (fév. 2026)",saisie:"Table Sectorielle, 19 fév. 2026"},
-    {nom:"APPMEF",domaine:"Cliniques mobiles lors des fêtes patronales",zones:"Département",periode:"Ponctuel",saisie:"Table Sectorielle, 19 fév. 2026"},
-  ],
-  realisations:[
-    {text:"Table Sectorielle Santé tenue — 80+ participants (partenaires, ministères, autorités locales, UAS). Agenda couvert intégralement.",date:"19 février 2026"},
-    {text:"Plan Opérationnel Départemental 2026 (POD) présenté et discuté avec tous les partenaires. Interventions de chaque partenaire identifiées et alignées.",date:"19 février 2026"},
-    {text:"Carte sanitaire départementale tracée avec les partenaires — zones d'intervention cartographiées pour éviter chevauchements et duplications.",date:"19 février 2026"},
-    {text:"État des Lieux Fonctionnel des PPS (EDL-PPS/2025) produit — 43 sites évalués, déficits documentés institution par institution.",date:"Novembre 2025"},
-    {text:"Rapport inter-institutionnel produit et consolidé (compilation : Rosemene Louis, Infirmière Responsable Soins Infirmiers, DSNE).",date:"Juin 2025"},
-    {text:"Supervisions intégrées réalisées dans l'ensemble du département.",date:"Janv. – Sept. 2025"},
-    {text:"Supervisions thématiques réalisées : vaccination, malaria, programmes prioritaires.",date:"2025"},
-    {text:"Collaboration opérationnelle DSNE–PNH maintenue pour sécuriser les déplacements des équipes médicales et les livraisons d'intrants.",date:"2024–2025"},
-    {text:"Fiche identitaire départementale documentée : 430 925 hab. (IHSI 2024) · projections UNFPA/OIM intégrées pour la planification.",date:"2024"},
-    {text:"Structure UAS validée et documentée — 3 UAS opérationnelles, Coordination UAS rattachée à la DSNE.",date:"2025"},
-    {text:"Zonage Bas Nord-Est / Haut Nord-Est établi et documenté pour orienter la planification logistique et le déploiement.",date:"2025"},
-    {text:"Partenariat Ma Santé mes Droits formalisé — 7 communes couvertes (Ferrier, Ouanaminthe, Capotille, Mont-Organisé, Carice, Meillac, Mérande).",date:"2025 – 2032"},
-    {text:"MDM Argentine — 3 années d'intervention en SMI, nutrition, choléra (CMSO, CMSMO, Capotille, HFL) + cliniques mobiles zones frontalières.",date:"Mars 2023 – Jan. 2026"},
-    {text:"18 partenaires actifs cartographiés avec zones et domaines d'intervention identifiés.",date:"Février 2026"},
-    {text:"CS Savane au Lait — ajout du service accouchement confirmé.",date:"Mars 2026"},
-  ],
-  lacunes:[
-    {text:"100 % des 43 sites évalués présentent au moins une insuffisance essentielle (énergie, équipements, intrants, locaux, registres) — y compris les 3 hôpitaux de référence.",date:"EDL-PPS/2025, Nov. 2025"},
-    {text:"Inversion fonctionnelle du PES : le premier niveau n'absorbe pas son flux minimal → surcharge chronique des hôpitaux (HFL, HCR, CMSO).",date:"Supervisions Jan–Sept. 2025"},
-    {text:"Retard prolongé dans l'appointement du personnel de santé — principale préoccupation opérationnelle de la DSNE.",date:"Table Sectorielle, 19 fév. 2026"},
-    {text:"Enclavement sévère du Haut Nord-Est : routes impraticables en saison des pluies (Capotille, Mombin-Crochu, Bois-de-Laurence, Grosse Roche, Dupity, Corosse).",date:"EDL Départemental, Nov. 2025"},
-    {text:"Transport sanitaire précaire dans les zones enclavées — femmes en travail souvent transférées sur motocyclette.",date:"EDL Départemental, Nov. 2025"},
-    {text:"Systèmes énergétiques défaillants dans la majorité des centres — panneaux solaires insuffisants, génératrices en panne, chaîne de froid instable.",date:"EDL-PPS/2025, Juin & Nov. 2025"},
-    {text:"Laboratoires absents ou non fonctionnels dans plusieurs CS/CCS — analyses de base non disponibles localement.",date:"EDL-PPS/2025, Juin 2025"},
-    {text:"Ruptures de stock fréquentes en médicaments et intrants essentiels.",date:"Supervisions 2025"},
-    {text:"Pénurie critique de spécialistes résidents dans toutes les structures secondaires (chirurgiens, pédiatres, gynécologues, internistes, anesthésistes).",date:"EDL-PPS/2025, Juin 2025"},
-    {text:"3 institutions sans rattachement UAS officiel : CS Mombin-Crochu, CCS Grosse Roche (Hors UAS), CS Bois Laurence.",date:"EDL Départemental, Nov. 2025"},
-    {text:"CS Corosse (commune de Capotille) non fonctionnel à ce jour — partenariat C2C (Care 2 Communities) en cours de mise en place.",date:"EDL Départemental, Nov. 2025 · C2C entrant 2026"},
-    {text:"Absence de structure de santé mentale dédiée dans le département.",date:"2025"},
-    {text:"Interventions partenaires fragmentées et insuffisamment alignées sur les priorités communes — risques de chevauchement.",date:"Table Sectorielle, 19 fév. 2026"},
-    {text:"Données de performance par PPS (volumes consultations, urgences, vaccination) non encore consolidées dans un rapport unique.",date:"EDL Départemental, Nov. 2025"},
-    {text:"Blocs sanitaires en mauvais état dans de nombreuses institutions — eau courante absente dans plusieurs CS/CCS.",date:"EDL-PPS/2025, Juin 2025"},
-    {text:"Absence de moyens de transport sanitaire propres dans la majorité des CS/CCS (ambulances, pick-up 4x4).",date:"EDL-PPS/2025, Juin 2025"},
-  ],
-  recommandations:[
-    {text:"Axe 1 — INFRASTRUCTURES : Réhabilitation ciblée des espaces fonctionnels (maternités, salles urgences, box consultation, labos) — priorité aux structures du Haut Nord-Est.",date:"EDL-PPS/2025"},
-    {text:"Axe 1 — INFRASTRUCTURES : Aménagement minimal garantissant confidentialité, hygiène et flux patient dans chaque institution.",date:"EDL-PPS/2025"},
-    {text:"Axe 2 — ÉQUIPEMENTS : Doter chaque CS/CCS d'équipements diagnostics de base (glucomètres, dopplers obstétricaux, centrifugeuses, oxymètres).",date:"EDL-PPS/2025"},
-    {text:"Axe 2 — ÉQUIPEMENTS : Renouveler le mobilier clinique (tables d'examen, lits, brancards, portes-sérum) et les petits consommables durables.",date:"EDL-PPS/2025"},
-    {text:"Axe 3 — ÉNERGIE : Déployer des systèmes solaires hybrides (panneaux + batteries/UPS) dans chaque PPS — priorité aux structures les plus déficitaires.",date:"EDL-PPS/2025"},
-    {text:"Axe 3 — ÉNERGIE : Stabiliser les configurations énergétiques pour la chaîne de froid et les laboratoires.",date:"EDL-PPS/2025"},
-    {text:"Axe 4 — MOBILITÉ : Acquérir des moyens roulants adaptés aux zones enclavées (pick-up 4x4, motos 120cc, ambulances).",date:"EDL-PPS/2025"},
-    {text:"Axe 4 — MOBILITÉ : Mettre en place un mécanisme durable d'approvisionnement en carburant pour les équipes de supervision et de transport sanitaire.",date:"EDL-PPS/2025"},
-    {text:"Axe 5 — GOUVERNANCE 1er NIVEAU : Standardiser les outils de travail (registres, fiches, supports) dans tous les PPS du département.",date:"EDL-PPS/2025"},
-    {text:"Axe 5 — GOUVERNANCE 1er NIVEAU : Renforcer les supervisions périodiques et organiser des modules de recyclage technique par programme.",date:"Plan Opérationnel 2026"},
-    {text:"Axe 6 — DSNE : Doter le bureau DSNE en équipements informatiques, mobilier et autonomie énergétique.",date:"EDL-PPS/2025"},
-    {text:"Axe 6 — DSNE : Assurer la mobilité opérationnelle du bureau (véhicules, motos, carburant) pour les supervisions départementales.",date:"EDL-PPS/2025"},
-    {text:"Régulariser le rattachement UAS officiel des 3 institutions hors UAS : CS Mombin-Crochu, CCS Grosse Roche, CS Bois Laurence.",date:"EDL Départemental, Nov. 2025"},
-    {text:"Aligner toutes les interventions partenaires sur les priorités réelles de l'EDL-PPS/2025 pour réduire les chevauchements.",date:"Table Sectorielle, 19 fév. 2026"},
-    {text:"Consolider les données de performance par PPS (indicateurs programmatiques) pour permettre un suivi continu des résultats départementaux.",date:"En cours — 2026"},
-  ],
-};
-
-/* ═══ STATE ═══ */
-let D, activeFilter='all';
-function load(){try{const r=localStorage.getItem('eldl_ne_v3');D=r?JSON.parse(r):deepClone(DEFAULTS)}catch(e){D=deepClone(DEFAULTS)}}
-function save(){D.savedAt=new Date().toISOString();try{localStorage.setItem('eldl_ne_v3',JSON.stringify(D))}catch(e){}flashSave();updateTs()}
-function deepClone(o){return JSON.parse(JSON.stringify(o))}
-function confirmReset(){if(confirm('Réinitialiser toutes les données aux valeurs par défaut ?')){localStorage.removeItem('eldl_ne_v3');D=deepClone(DEFAULTS);renderAll();initMap()}}
-function flashSave(){const e=document.getElementById('saveFlash');e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
-function updateTs(){const e=document.getElementById('tsDisplay');if(!D||!D.savedAt)return;const d=new Date(D.savedAt);e.textContent='Mis à jour le '+d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
-function onBlur(k,el){D[k]=el.textContent.trim();save()}
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-
-/* ═══ MAP ═══ */
-let leafletMap=null;
-const UAS_COLORS={'Fort-Liberté':'#1a3a6b','Ouanaminthe':'#2d6a3f','Trou-du-Nord':'#7a3a0c','Hors UAS':'#555555'};
-const HOSP_TYPES=['Hôpital Départemental','Hôpital Communautaire de Référence','CMS / Hôpital'];
-
-function initMap(){
-  if(leafletMap){leafletMap.remove();leafletMap=null}
-  leafletMap=L.map('map',{zoomControl:true}).setView([19.52,-71.90],10);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | MSPP/SISNU',
-    maxZoom:17
-  }).addTo(leafletMap);
-  D.institutions.forEach(inst=>{
-    if(!inst.lat||!inst.lng)return;
-    const color=UAS_COLORS[inst.uas]||'#555';
-    const isHosp=HOSP_TYPES.includes(inst.type);
-    const isNF=inst.statut==='Non fonctionnel';
-    const radius=isHosp?11:7;
-    const marker=L.circleMarker([inst.lat,inst.lng],{
-      radius,color:'white',weight:isHosp?2:1.5,
-      fillColor:isNF?'#aaa':color,fillOpacity:isNF?0.4:0.85
-    }).addTo(leafletMap);
-    marker.bindPopup(`
-      <div style="font-family:'IBM Plex Sans',sans-serif;font-size:12px;min-width:200px">
-        <strong style="color:#0c1f3f;font-size:13px">${inst.nom}</strong><br>
-        <span style="color:#888;font-size:10px">${inst.type} · ${inst.commune}</span><br>
-        <hr style="margin:5px 0;border-color:#e5dfd3">
-        <span style="font-size:10px;color:#555">UAS : <strong>${inst.uas}</strong></span><br>
-        <span style="font-size:10px;color:${isNF?'#b8341b':'#2d7a4f'};font-weight:600">${inst.statut}</span><br>
-        ${inst.partenaire&&inst.partenaire!=='—'?`<span style="font-size:10px;color:#555">Partenaire : ${inst.partenaire}</span>`:''}
-      </div>
-    `,{maxWidth:280});
-  });
-}
-
-/* ═══ STATS ═══ */
-function renderStats(){
-  const tot=D.institutions.length;
-  const act=D.institutions.filter(i=>i.statut==='Actif').length;
-  const pt=D.partenaires.length;
-  document.getElementById('statsBar').innerHTML=`
-    <div class="stat-block"><div class="stat-num">${tot}</div><div class="stat-label">Institutions</div></div>
-    <div class="stat-block"><div class="stat-num">${act}</div><div class="stat-label">Actives</div></div>
-    <div class="stat-block"><div class="stat-num">3</div><div class="stat-label">Hôpitaux</div></div>
-    <div class="stat-block"><div class="stat-num">${pt}</div><div class="stat-label">Partenaires</div></div>
-    <div class="stat-block"><div class="stat-num">~ 431 000</div><div class="stat-label">Habitants (IHSI 2024 est.)</div></div>
-  `;
-  document.getElementById('instTotal').textContent=`${tot} au total · ${act} actives`;
-}
-
-/* ═══ INSTITUTIONS ═══ */
-const UAS_ORDER=['Fort-Liberté','Ouanaminthe','Trou-du-Nord','Hors UAS'];
-const UAS_CLS={'Fort-Liberté':'uas-fl','Ouanaminthe':'uas-ou','Trou-du-Nord':'uas-td','Hors UAS':'uas-hors'};
-
-function setFilter(uas,btn){
-  activeFilter=uas;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderInstitutions();
-}
-
-function renderInstitutions(){
-  const con=document.getElementById('instContainer');
-  con.innerHTML='';
-  UAS_ORDER.forEach(u=>{
-    const items=D.institutions.filter(i=>i.uas===u&&(activeFilter==='all'||i.uas===activeFilter));
-    if(!items.length)return;
-    const g=document.createElement('div');g.className='uas-group';
-    g.innerHTML=`<div class="uas-head"><span class="uas-badge ${UAS_CLS[u]||''}">${u}</span><span class="uas-count">${items.length} institution${items.length>1?'s':''}</span></div>`;
-    const w=document.createElement('div');w.className='table-wrap';
-    const t=document.createElement('table');
-    t.innerHTML=`<thead><tr><th>#</th><th>Institution</th><th>Directeur Médical</th><th>Type</th><th>Commune</th><th>Services offerts</th><th>Ressources humaines</th><th>Partenaire(s)</th><th>Statut</th><th>Source / Date</th><th></th></tr></thead>`;
-    const tb=document.createElement('tbody');
-    items.forEach(inst=>{
-      const idx=D.institutions.findIndex(i=>i.id===inst.id);
-      const tr=document.createElement('tr');
-      tr.innerHTML=`
-        <td style="color:var(--muted);font-size:.7rem">${inst.id}</td>
-        <td style="min-width:155px"><span contenteditable="true" spellcheck="false" onblur="updI(${idx},'nom',this)" style="font-weight:500">${esc(inst.nom)}</span></td>
-        <td style="min-width:130px;font-size:.79rem"><span contenteditable="true" spellcheck="false" onblur="updI(${idx},'dm',this)" style="color:#0d7a8a">${esc(inst.dm||'À compléter')}</span></td>
-        <td style="min-width:90px"><span contenteditable="true" spellcheck="false" onblur="updI(${idx},'type',this)" style="font-size:.76rem;color:var(--muted)">${esc(inst.type)}</span></td>
-        <td style="white-space:nowrap"><span contenteditable="true" spellcheck="false" onblur="updI(${idx},'commune',this)">${esc(inst.commune)}</span></td>
-        <td style="min-width:200px"><textarea class="svc-ta" rows="2" onblur="updITA(${idx},'services',this)">${esc(inst.services)}</textarea></td>
-        <td style="min-width:190px"><textarea class="rh-ta" rows="2" onblur="updITA(${idx},'rh',this)">${esc(inst.rh)}</textarea></td>
-        <td style="min-width:130px"><span contenteditable="true" spellcheck="false" onblur="updI(${idx},'partenaire',this)" style="font-size:.77rem">${esc(inst.partenaire)}</span></td>
-        <td><select class="status-sel" onchange="updIS(${idx},this.value)"><option ${inst.statut==='Actif'?'selected':''}>Actif</option><option ${inst.statut==='Non fonctionnel'?'selected':''}>Non fonctionnel</option><option ${inst.statut==='En développement'?'selected':''}>En développement</option></select></td>
-        <td style="min-width:120px"><input class="date-inp" value="${esc(inst.sourceDate||'')}" placeholder="Source · Date" onblur="updI(${idx},'sourceDate',this)" style="border:none;background:transparent;font-size:.65rem;color:var(--muted);font-family:inherit;width:100%;cursor:text;font-style:italic"></td>
-        <td><button class="btn btn-ghost" onclick="delI(${idx})">✕</button></td>
-      `;
-      tb.appendChild(tr);
-    });
-    t.appendChild(tb);w.appendChild(t);g.appendChild(w);con.appendChild(g);
-  });
-  renderStats();
-}
-
-function updI(idx,f,el){D.institutions[idx][f]=el.tagName==='INPUT'?el.value.trim():el.textContent.trim();save()}
-function updITA(idx,f,el){D.institutions[idx][f]=el.value.trim();save()}
-function updIS(idx,v){D.institutions[idx].statut=v;save();renderStats()}
-function delI(idx){if(!confirm('Supprimer ?'))return;D.institutions.splice(idx,1);renderInstitutions();save()}
-function addInstitution(){
-  const uas=activeFilter==='all'?'Ouanaminthe':activeFilter;
-  D.institutions.push({id:Date.now(),nom:"Nouvelle institution",type:"CS",uas,commune:"—",services:"À compléter",rh:"À compléter",partenaire:"—",statut:"Actif",sourceDate:"",lat:19.55,lng:-71.9});
-  renderInstitutions();save();
-}
-
-/* ═══ PARTNERS ═══ */
-function renderPartners(){
-  const tb=document.getElementById('partBody');tb.innerHTML='';
-  D.partenaires.forEach((p,idx)=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`
-      <td style="min-width:135px;font-weight:500"><span contenteditable="true" spellcheck="false" onblur="updP(${idx},'nom',this)">${esc(p.nom)}</span></td>
-      <td style="min-width:180px"><textarea class="svc-ta" rows="2" onblur="updPTA(${idx},'domaine',this)">${esc(p.domaine)}</textarea></td>
-      <td style="min-width:155px"><textarea class="svc-ta" rows="2" onblur="updPTA(${idx},'zones',this)">${esc(p.zones)}</textarea></td>
-      <td style="white-space:nowrap;font-size:.77rem"><span contenteditable="true" spellcheck="false" onblur="updP(${idx},'periode',this)">${esc(p.periode)}</span></td>
-      <td style="font-size:.67rem;color:var(--muted);font-style:italic;white-space:nowrap"><span contenteditable="true" spellcheck="false" onblur="updP(${idx},'saisie',this)">${esc(p.saisie||'')}</span></td>
-      <td><button class="btn btn-ghost" onclick="delP(${idx})">✕</button></td>
-    `;
-    tb.appendChild(tr);
-  });
-  document.getElementById('partCount').textContent=D.partenaires.length+' actifs';
-}
-function updP(idx,f,el){D.partenaires[idx][f]=el.textContent.trim();save()}
-function updPTA(idx,f,el){D.partenaires[idx][f]=el.value.trim();save()}
-function delP(idx){if(!confirm('Supprimer ?'))return;D.partenaires.splice(idx,1);renderPartners();save()}
-function addPartner(){D.partenaires.push({nom:"Nouveau partenaire",domaine:"À compléter",zones:"—",periode:"En cours",saisie:new Date().toLocaleDateString('fr-FR')});renderPartners();save()}
-
-/* ═══ LISTS WITH DATES ═══ */
-function renderList(key,cId,countId){
-  const c=document.getElementById(cId);c.innerHTML='';
-  D[key].forEach((item,idx)=>{
-    const text=typeof item==='string'?item:item.text||'';
-    const date=typeof item==='object'?item.date||'':'';
-    const row=document.createElement('div');row.className='list-row';
-    row.innerHTML=`
-      <div class="list-main">
-        <div class="list-dot"></div>
-        <div>
-          <div class="list-text" contenteditable="true" spellcheck="false" onblur="updL('${key}',${idx},'text',this)">${esc(text)}</div>
-          <div class="list-date"><input style="border:none;background:transparent;font-size:.63rem;color:var(--muted);font-family:inherit;font-style:italic;cursor:text;width:180px" value="${esc(date)}" placeholder="Source · Date" onblur="updLDate('${key}',${idx},this)"></div>
-        </div>
-      </div>
-      <button class="btn btn-ghost" style="margin-top:2px" onclick="delL('${key}',${idx},'${cId}','${countId}')">✕</button>
-    `;
-    c.appendChild(row);
-  });
-  document.getElementById(countId).textContent=D[key].length;
-}
-function updL(key,idx,field,el){
-  if(typeof D[key][idx]==='string')D[key][idx]={text:el.textContent.trim(),date:''};
-  else D[key][idx].text=el.textContent.trim();
-  save();
-}
-function updLDate(key,idx,el){
-  if(typeof D[key][idx]==='string')D[key][idx]={text:D[key][idx],date:el.value.trim()};
-  else D[key][idx].date=el.value.trim();
-  save();
-}
-function delL(key,idx,cId,countId){D[key].splice(idx,1);renderList(key,cId,countId);save()}
-function addListItem(key,cId,countId){D[key].push({text:"Nouvel élément — cliquez pour modifier",date:""});renderList(key,cId,countId);save()}
-
-/* ═══ RENDER ALL ═══ */
-function renderAll(){
-  document.getElementById('periodeEl').textContent=D.periode||DEFAULTS.periode;
-  document.getElementById('fi_pop').textContent=D.population||DEFAULTS.population;
-  renderInstitutions();
-  renderPartners();
-  renderList('realisations','realList','realCount');
-  renderList('lacunes','lacList','lacCount');
-  renderList('recommandations','recList','recCount');
-  renderStats();updateTs();
-}
-
-load();renderAll();
-window.addEventListener('load',initMap);
-
-</script>
 
 <!-- ═══ MAIN SITE SCRIPT ═══ -->
 <script>
