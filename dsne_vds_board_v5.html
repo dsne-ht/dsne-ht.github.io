@@ -1,0 +1,303 @@
+
+<h2 class="sr-only">DSNE Value Delivery System Board v5 — complete with vision statements for all five projects</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);background:transparent}
+.hdr{border-bottom:0.5px solid var(--color-border-tertiary);padding:14px 18px 10px;position:sticky;top:0;background:var(--color-background-primary);z-index:50}
+.hdr-sub{font-size:10px;letter-spacing:.18em;color:var(--color-text-tertiary);text-transform:uppercase;font-family:var(--font-mono)}
+.hdr-title{font-size:18px;font-weight:500;margin-top:3px}
+.wrap{padding:14px 18px;max-width:820px}
+.proj-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.proj-btn{padding:5px 11px;border-radius:4px;border:0.5px solid var(--color-border-tertiary);cursor:pointer;font-size:11px;font-family:var(--font-mono);background:transparent;color:var(--color-text-secondary);text-align:left;transition:all .15s}
+.proj-btn .note{font-size:9px;margin-top:1px;opacity:.8}
+.section-card{border-radius:6px;border:0.5px solid;border-left-width:3px;padding:11px 13px;margin-bottom:12px}
+.section-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-family:var(--font-mono);margin-bottom:8px;font-weight:500}
+.just-field label{font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em}
+.toggle{display:flex;border:0.5px solid var(--color-border-tertiary);border-radius:4px;overflow:hidden;width:fit-content;margin-bottom:14px}
+.toggle button{padding:6px 13px;background:transparent;border:none;cursor:pointer;font-size:11px;font-family:var(--font-mono);color:var(--color-text-tertiary)}
+.toggle button.active{background:var(--color-background-secondary);font-weight:500}
+.proj-ind{display:flex;align-items:center;gap:8px;padding:7px 11px;border-radius:4px;border:0.5px solid var(--color-border-tertiary);border-left-width:3px;margin-bottom:14px}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.layer-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:6px;overflow:hidden;margin-bottom:10px}
+.layer-hdr{display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.layer-body{padding:10px 12px}
+.hint{font-size:10px;color:var(--color-text-tertiary);font-style:italic;margin-bottom:5px}
+.field-ta{width:100%;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:4px;color:var(--color-text-primary);padding:7px 9px;font-size:12px;font-family:var(--font-serif);resize:vertical;outline:none;line-height:1.6}
+.fn-tag{font-size:10px;font-family:var(--font-mono);padding:2px 5px;border-radius:2px;font-weight:500}
+.footer{margin-top:16px;font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono)}
+</style>
+
+<div class="hdr">
+  <div class="hdr-sub">PMBOK 7 · DSNE · Programme de Gouvernance Institutionnelle</div>
+  <div class="hdr-title">Value Delivery System Board</div>
+</div>
+
+<div class="wrap">
+  <div class="proj-row" id="projRow"></div>
+
+  <div id="visionCard" class="section-card">
+    <div class="section-label" id="visionLabel">◈ Vision</div>
+    <textarea id="visionTa" rows="5" style="width:100%;background:transparent;border:none;color:var(--color-text-primary);padding:0;font-size:12px;font-family:var(--font-serif);resize:vertical;outline:none;line-height:1.7;box-sizing:border-box" placeholder="Purpose · Success · Future state · Drift signals"></textarea>
+  </div>
+
+  <div id="valCard" class="section-card">
+    <div class="section-label" id="valLabel">✦ Value Delivered</div>
+    <textarea id="valTa" rows="5" style="width:100%;background:transparent;border:none;color:var(--color-text-primary);padding:0;font-size:12px;font-family:var(--font-serif);resize:vertical;outline:none;line-height:1.7;box-sizing:border-box" placeholder="Output · Outcome · Benefit · Approche"></textarea>
+  </div>
+
+  <div id="justCard" class="section-card">
+    <div class="section-label" id="justLabel">⚑ Justification</div>
+    <div style="display:grid;gap:10px;">
+      <div class="just-field"><label>Business Need</label><textarea id="jNeed" rows="3" class="field-ta"></textarea></div>
+      <div class="just-field"><label>Lien Stratégique</label><textarea id="jStrategy" rows="2" class="field-ta"></textarea></div>
+      <div class="just-field"><label>Pourquoi cette approche</label><textarea id="jApproach" rows="2" class="field-ta"></textarea></div>
+    </div>
+  </div>
+
+  <div class="toggle">
+    <button id="btnSvd" class="active" onclick="switchView('svd')">SVD Hierarchy</button>
+    <button id="btnFn" onclick="switchView('functions')">Project Functions (2.3)</button>
+  </div>
+
+  <div class="proj-ind" id="projInd">
+    <div class="dot" id="projDot"></div>
+    <span style="font-size:12px;color:var(--color-text-secondary)" id="projName"></span>
+    <span style="margin-left:auto;font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono)" id="projTag"></span>
+  </div>
+
+  <div id="viewArea"></div>
+  <div class="footer">Edits stored in session — ask Claude to export updated JSX to save permanently.</div>
+</div>
+
+<script>
+const PROJECTS=[
+  {id:"sop",label:"SOP Institutionnel",color:"#C8923A",note:"Contains: Procédure Engagement Partenaires · Receives: procedures from Plan de Sécurité"},
+  {id:"badge",label:"Système Badge/Accès QR",color:"#5B8FA8",note:"Scope: all public health institutions · Nord-Est"},
+  {id:"it",label:"Réactivation IT",color:"#7A6E9E",note:"Scope: DSNE + HR infrastructure · 42 institutions"},
+  {id:"capacity",label:"Réunion de Staff Départementale Mensuelle",color:"#4E9E72",note:"Scope: DSNE + all institutions · Nord-Est"},
+  {id:"security",label:"Plan de Sécurité",color:"#C85A5A",note:"Standalone · Procedures feed into SOP"},
+];
+
+const LAYERS=[
+  {id:"leadership",label:"Senior Leadership",sub:"Direction Stratégique",icon:"◈",hint:"Who sets the strategic direction?"},
+  {id:"portfolio",label:"Portfolio",sub:"Ensemble des Initiatives",icon:"◫",hint:"The full collection of programs and standalone projects under one strategic umbrella."},
+  {id:"program",label:"Program",sub:"Workstreams Liés",icon:"⬡",hint:"The related projects whose benefits are interdependent."},
+  {id:"operations",label:"Operations",sub:"Fonctionnement Continu",icon:"◎",hint:"What remains and runs continuously after the projects close?"},
+];
+
+const FNS=[
+  {id:"oversight",sec:"2.3.1",label:"Provide Oversight & Coordination",hint:"Orchestrating the work — planning, monitoring, controlling."},
+  {id:"objectives",sec:"2.3.2",label:"Present Objectives & Feedback",hint:"Who defines the requirements and desired outcomes?"},
+  {id:"facilitate",sec:"2.3.3",label:"Facilitate & Support",hint:"Who facilitates collaboration and resolves conflicts?"},
+  {id:"perform",sec:"2.3.4",label:"Perform Work & Contribute Insights",hint:"Who does the actual work?"},
+  {id:"expertise",sec:"2.3.5",label:"Apply Expertise",hint:"Who brings specialized knowledge?"},
+  {id:"direction",sec:"2.3.6",label:"Provide Business Direction & Insight",hint:"Who clarifies direction and sets priorities?"},
+  {id:"resources",sec:"2.3.7",label:"Provide Resources & Direction",hint:"Who secures resources and authority?"},
+];
+
+const SVD_SHARED={
+  leadership:"Dr. Jean Clervain Dorsainvil — Directeur Départemental, DSNE. Autorité institutionnelle sous mandat MSPP pour la gouvernance sanitaire du département Nord-Est.",
+  portfolio:"Réforme Institutionnelle DSNE. À l'intérieur de la DSNE, ce programme de gouvernance constitue l'essentiel de la réforme institutionnelle. Daïsha en est le principal architecte, avec comme parties prenantes : le personnel, l'Administrateur, le Chef Comptable, et les employés.",
+  program:"Programme de Gouvernance Institutionnelle DSNE — cinq workstreams interdépendants : SOP Institutionnel, Système Badge/Accès QR, Réactivation IT, Réunion de Staff Départementale Mensuelle, Plan de Sécurité. Conçu et dirigé par Daïsha Dorsainvil.",
+};
+
+const DATA={
+  sop:{
+    vision:"The SOP Institutionnel exists to make DSNE's governance visible, measurable, and enforceable. The project succeeds when any staff member can follow its procedures without guidance, when an auditor can verify institutional compliance against it, and when those procedures are consistently followed and actively enforced by the Director, the Administrator, and every authority who contributed to building it. The rollout follows a deliberate sequence: establish a base version, implement it, then refine through working and training sessions with all staff. The project is drifting if no procedure reaches sign-off, if stakeholders cannot align, if versions accumulate without deployment, if enforcement never materializes, or if the document lives only with its author.",
+    value:"Output : Un document central de référence regroupant toutes les procédures importantes ou récurrentes de la DSNE.\n\nOutcome : Renforcement de la gouvernance institutionnelle — le personnel dispose d'une marche à suivre claire, les tâches importantes sont standardisées, et le bon fonctionnement de la DSNE devient évaluable.\n\nBenefit : Une institution fiable et bien huilée. Les procédures permettent d'évaluer la performance et la fiabilité des employés. La DSNE devient auditable — ce qui était invisible devient responsable.\n\nApproche : Rédiger une version de base, l'implémenter, puis itérer à travers des séances de travail et de formation avec tout le personnel.",
+    jNeed:"Lors des audits, la DSNE était régulièrement interrogée sur ses processus internes — et ne pouvait rien fournir. Sans SOP, il est impossible de mesurer la gouvernance, de tracer les procédures, ou de définir les critères de succès.",
+    jStrategy:"Le mandat MSPP exige que les directions départementales puissent rendre compte de leur gouvernance interne. Le SOP transforme des pratiques implicites en procédures formelles auditables.",
+    jApproach:"Un SOP centralisé et évolutif — parce que la traçabilité et l'évaluation exigent un document de référence unique, accessible, et maintenu.",
+    leadership:SVD_SHARED.leadership,portfolio:SVD_SHARED.portfolio,program:SVD_SHARED.program,
+    operations:"Traçabilité complète. Critères de gouvernance définis. Le SOP est vivant — consulté, suivi, et enforced par les autorités qui l'ont construit.",
+    oversight:"Daïsha assure la coordination générale — planification, suivi des révisions, cohérence entre les sections.",
+    objectives:"Le Directeur, l'Administrateur, et le Chef Comptable fournissent les retours selon leurs domaines.",
+    facilitate:"Daïsha facilite le processus de révision et gère les divergences entre parties prenantes.",
+    perform:"Daïsha réalise l'intégralité du travail de rédaction.",
+    expertise:"Directeur : gouvernance sanitaire. Administrateur : gestion administrative. Chef Comptable : procédures financières.",
+    direction:"Le Directeur fournit la direction institutionnelle et fixe les points de validation formelle.",
+    resources:"Le Directeur détient l'autorité de validation finale et de signature.",
+  },
+  badge:{
+    vision:"The Badge/QR System exists to formally identify every public health employee across all institutions in the Nord-Est department. The project succeeds when every employee has a standardized badge — clear photo, full name, blood type, CIN, functional title — and wears it. DSNE, as the implementing authority, completes a full first-generation rollout across all institutions. After one year of active use, the first generation is phased out and replaced by an improved version informed by real deployment. The project is drifting if rollout is incomplete across institutions, if new versions release before the current one is fully deployed, if production stalls due to payment delays or remains a one-person task competing with secretary work, or if badges are made but not worn. When complete, every public health worker in Nord-Est is identifiable — in the field, at the door, and in a crisis.",
+    value:"Output : Des badges d'identification standardisés pour tout le personnel de santé publique du département Nord-Est — photo, nom complet, groupe sanguin, CIN, titre fonctionnel. QR code lié à un registre privé (anti-contrefaçon). Scanner biométrique pour le contrôle d'accès interne.\n\nOutcome : Chaque employé de santé publique dans le Nord-Est est formellement identifiable — en supervision terrain, à l'entrée des institutions, et en cas d'incident. DSNE exerce une fonction de supervision concrète à l'échelle départementale.\n\nBenefit : Sécurité institutionnelle renforcée à travers tout le département. DSNE affirme son autorité de supervision en tant qu'institution émettrice.\n\nApproche : Déploiement complet d'une première génération. Un an d'utilisation active. Remplacement par une version améliorée — une génération à la fois.",
+    jNeed:"Les employés de santé publique peuvent être refusés à l'entrée de sites lors de supervisions terrain faute d'identification formelle. Aucun moyen de distinguer le personnel des visiteurs. En cas d'incident, sans identification, impossible de retracer les présents. Ce problème concerne toutes les institutions publiques du Nord-Est.",
+    jStrategy:"L'émission de badges par la DSNE pour toutes les institutions du département est une expression concrète de son mandat de supervision MSPP — reliant identification, gouvernance, sécurité, et supervision de terrain.",
+    jApproach:"Badges physiques standardisés avec QR code et scanner biométrique — identification visible, vérifiable instantanément, protégée contre la contrefaçon. Une génération complète avant la suivante.",
+    leadership:SVD_SHARED.leadership,portfolio:SVD_SHARED.portfolio,program:SVD_SHARED.program,
+    operations:"Tout le personnel de santé publique du Nord-Est est identifié et identifiable. Les badges sont portés. La DSNE maintient le registre d'authenticité. La production est déléguée au service IT.",
+    oversight:"Daïsha et les RH co-coordonnent. Les RH collectent les données. Daïsha conçoit le système et assure l'implémentation.",
+    objectives:"Le Directeur définit les objectifs. Daïsha collecte les retours de toutes les parties : cadres, employés, Chef IT, RH, institutions partenaires.",
+    facilitate:"Daïsha facilite la collaboration. Le Directeur résout les conflits dépassant le périmètre opérationnel.",
+    perform:"Daïsha réalise l'essentiel du travail. Les employés fournissent leurs données. Les RH organisent ces données.",
+    expertise:"Daïsha : design et implémentation système. RH : gestion du personnel. Chef IT : logistique matérielle.",
+    direction:"Le Directeur fournit la direction institutionnelle et les insights stratégiques.",
+    resources:"Le Directeur fournit le financement. Le Chef IT met à disposition les ressources matérielles.",
+  },
+  it:{
+    vision:"The IT Reactivation project exists to build a functioning, autonomous IT department that backs DSNE's institutional initiatives and serves as the technical backbone for departmental HR operations across all 42 institutions. The project succeeds when a staffed team — engineers, informaticiens, helpdesk — operates independently: producing badges, managing employee contracts and registries through proper HR software, maintaining archives, running helpdesk support, and leading its own projects. When complete, the HR function will no longer rely on manual Excel tracking for 42 institutions, badge production will be a delegated service, and DSNE will have the digital infrastructure its governance program requires. IT will be a department that anticipates problems, not just responds to them. The project is drifting if meetings continue with no formal launch, if the service is never officially stood up with a named team and defined responsibilities, if HR data management and badge production remain manual or centralized on one person, or if no IT-led project ever initiates.",
+    value:"Output : Un service IT réactivé — infrastructure physique et unité staffée positionnée auprès des RH.\n\nOutcome : Gestion numérique des données opérationnelle. Contrats et registres des employés des 42 institutions gérés par logiciel RH. Support technique concret. Formations pour la numérisation. Production des badges déléguée.\n\nBenefit : Responsabilités IT consolidées. La DSNE cesse d'être archaïque. Socle technique dont dépendent les autres workstreams.\n\nApproche : Identifier les besoins, analyser l'existant, proposer des solutions — puis staffier et équiper le service.",
+    jNeed:"Gestion des données défaillante, support IT quasi-inexistant. Les RH gèrent manuellement via Excel les contrats et listes d'employés de 42 institutions. Production des badges centralisée sur Daïsha — insoutenable.",
+    jStrategy:"Un service IT fonctionnel est le socle technique de la numérisation de la DSNE et un prérequis pour la durabilité des autres workstreams : badges, scanner biométrique, caméras de sécurité, données RH.",
+    jApproach:"Réactiver un service IT dédié plutôt que de disperser les responsabilités — parce que la durabilité exige une unité avec l'expertise, les ressources, et le mandat.",
+    leadership:SVD_SHARED.leadership,portfolio:SVD_SHARED.portfolio,program:SVD_SHARED.program,
+    operations:"Données et contrats RH centralisés pour 42 institutions. Solutions logicielles en place. Support IT continu. Production des badges déléguée au service IT. IT génère ses propres projets.",
+    oversight:"Daïsha coordonne au nom du Directeur — autorité déléguée.",
+    objectives:"Le Directeur définit les objectifs. Les personnes désignées précisent les besoins réels.",
+    facilitate:"Daïsha facilite et soutient le groupe de travail.",
+    perform:"Les personnes choisies par Daïsha réalisent le travail analytique.",
+    expertise:"Les personnes qui vont opérer le service IT appliquent leur expertise technique.",
+    direction:"Daïsha et le groupe co-définissent la direction opérationnelle et analysent les risques.",
+    resources:"L'Administrateur fournit les ressources. Le Directeur détient l'autorité de validation.",
+  },
+  capacity:{
+    vision:"The Réunion de Staff Départementale Mensuelle exists to create a regular, mandatory mechanism for cohesion, communication, training, and the collective addressing of pain points across DSNE and all institutions in the Nord-Est department. The project succeeds when meetings happen monthly without fail, when pain points are raised, documented, and followed up session to session, and when training is delivered without the cost of separate ateliers. When fully running, DSNE will have a standing rhythm of alignment with all its institutions — services and institutions connected, not isolated, and the director and chiefs of service in regular structured dialogue. The project is drifting if the mechanism is never formally launched, if meetings lose their mandatory character, if pain points raised in one session are not revisited in the next, or if sessions produce no traceable outcomes.",
+    value:"Output : Séance mensuelle documentée — obligatoire, récurrente, couvrant l'ensemble des institutions et services du département Nord-Est. Sans financement d'atelier séparé.\n\nOutcome : Faiblesses adressées systématiquement. Objectifs départementaux alignés collectivement. Cohésion et communication entre DSNE et toutes les institutions.\n\nBenefit : Amélioration continue à coût quasi-zéro. Le département se déplace ensemble plutôt qu'indépendamment.\n\nApproche : Réunion mensuelle obligatoire pilotée par le Responsable de la Communication, avec suivi documenté.",
+    jNeed:"Aucun mécanisme pour rester connecté au département et à ses institutions, dispenser des formations régulières, ou adresser les points de douleur collectivement sans contacter chaque personne individuellement.",
+    jStrategy:"Une direction départementale doit pouvoir former, aligner, et connecter ses institutions sans coûts additionnels. Les réunions mensuelles sont le mécanisme qui rend cela possible.",
+    jApproach:"Réunions mensuelles obligatoires — la récurrence transforme une réunion en mécanisme institutionnel durable.",
+    leadership:SVD_SHARED.leadership,portfolio:SVD_SHARED.portfolio,program:SVD_SHARED.program,
+    operations:"Gouvernance continue : formation, cohésion, alignement — mensuellement, pour DSNE et toutes les institutions du département, sans coût additionnel.",
+    oversight:"Daïsha coordonne le cycle mensuel. Le Responsable de la Communication anime la réunion.",
+    objectives:"Les Chefs de Service et représentants des institutions identifient les faiblesses opérationnelles.",
+    facilitate:"Le Responsable de la Communication facilite. Daïsha assure le suivi entre sessions.",
+    perform:"Daïsha coordonne et sollicite les rapports mensuels des RH, Épidémiologie, et Comptabilité.",
+    expertise:"Les Chefs de Service apportent leur expertise de terrain.",
+    direction:"Le Directeur fournit la direction stratégique.",
+    resources:"L'Administration et le Directeur fournissent les ressources.",
+  },
+  security:{
+    vision:"The Plan de Sécurité exists to secure the DSNE and establish protocols that prevent security incidents — and ensure that when incidents occur, the institution can respond organizedly and trace what happened. The project succeeds when security protocols are written, known, and actively applied by security staff; when access procedures make unauthorized entry traceable; and when the plan is embedded in the SOP rather than existing as an isolated document. When in place, DSNE will be safer — equipment won't be stolen with impunity, the building will have real access controls, and security staff will know exactly how to respond to an incident and how to help identify those responsible. The other four projects depend on this one: you cannot build institutional assets and leave them unsecured. The project is drifting if the plan is never written due to lack of motivation, or if it is written but never respected or implemented — a plan that exists only on paper is not a security plan.",
+    value:"Business Need : Deux incidents — incendie criminel et vol d'une veste MSPP/DSNE. Daïsha avait anticipé ce besoin avant les incidents.\n\nOutput : Plan de sécurité formel — évaluation contextuelle, analyse des risques, état des lieux, procédures intégrées dans le SOP.\n\nOutcome : Institution en posture préventive. Personnel avec réponse organisée aux incidents. Accès traçable.\n\nBenefit : Les autres projets sont sécurisés. Un plan sur papier seulement n'est pas un plan de sécurité.\n\nPourquoi en dernier : Les autres projets créent des actifs. Le plan de sécurité les protège.",
+    jNeed:"Deux incidents ont exposé l'absence totale de protocole. Personnel sans marche à suivre, failli être traités comme suspects. Un inconnu dispose maintenant d'une veste institutionnelle officielle.",
+    jStrategy:"Sans plan de sécurité, les actifs créés par les autres projets sont vulnérables. La sécurité est la condition de durabilité de tout le programme.",
+    jApproach:"Plan formel avec évaluation systématique — parce que la prévention exige une analyse, pas une réponse ad hoc. Les procédures s'intègrent dans le SOP.",
+    leadership:SVD_SHARED.leadership,portfolio:SVD_SHARED.portfolio,program:SVD_SHARED.program,
+    operations:"Protocole de réponse aux incidents actif. Actifs institutionnels protégés. Procédure d'accès visiteurs du SOP ancrée dans une base sécuritaire réelle. Personnel de sécurité formé.",
+    oversight:"Daïsha assure la coordination — mandat validé par le Directeur après deux incidents.",
+    objectives:"Daïsha est l'initiatrice. Le Directeur a donné le feu vert. Parties prenantes à définir lors de l'évaluation.",
+    facilitate:"Daïsha facilite. Évaluations préliminaires complétées avant d'engager Dr. Eddy.",
+    perform:"Daïsha réalise les travaux analytiques. L'Ingénieur fournit les plans architecturaux.",
+    expertise:"Dr. Eddy — planification sécuritaire (disponibilité incertaine). L'Ingénieur — architecture. Daïsha — méthodologie et contexte.",
+    direction:"Le Directeur fournit l'autorité formelle. Daïsha et Dr. Eddy co-définissent la direction opérationnelle.",
+    resources:"Le Directeur fournit les ressources.",
+  },
+};
+
+let activeP="sop",activeView="svd";
+function col(){return PROJECTS.find(p=>p.id===activeP).color}
+function get(fid){return DATA[activeP][fid]||""}
+function set(fid,val){DATA[activeP][fid]=val}
+
+function renderProjRow(){
+  const el=document.getElementById("projRow");el.innerHTML="";
+  PROJECTS.forEach(p=>{
+    const b=document.createElement("button");b.className="proj-btn";
+    if(activeP===p.id){b.style.background=p.color;b.style.color="#fff";b.style.borderColor=p.color;b.style.fontWeight="bold";}
+    b.innerHTML=p.label+(p.note?`<div class="note">↳ ${p.note}</div>`:"");
+    b.onclick=()=>{activeP=p.id;render()};el.appendChild(b);
+  });
+}
+
+function renderSection(cardId,labelId,taId,field,rows,labelText,bg,borderColor){
+  const c=col();
+  const card=document.getElementById(cardId);
+  card.style.cssText=`border-radius:6px;border:0.5px solid ${borderColor||c}55;border-left:3px solid ${borderColor||c};padding:11px 13px;margin-bottom:12px;background:${bg||c+'12'}`;
+  document.getElementById(labelId).style.color=borderColor||c;
+  const ta=document.getElementById(taId);
+  ta.rows=rows;ta.value=get(field);
+  ta.oninput=e=>set(field,e.target.value);
+}
+
+function renderJustCard(){
+  const c=col();
+  document.getElementById("justLabel").style.color=c;
+  const jc=document.getElementById("justCard");
+  jc.style.cssText=`border-radius:6px;border:0.5px solid ${c}33;border-left:3px solid ${c}88;padding:11px 13px;margin-bottom:12px;background:var(--color-background-secondary)`;
+  ["jNeed","jStrategy","jApproach"].forEach(fid=>{
+    const ta=document.getElementById(fid);
+    ta.value=get(fid);
+    ta.oninput=e=>set(fid,e.target.value);
+    ta.onfocus=()=>{ta.style.borderColor=c};
+    ta.onblur=()=>{ta.style.borderColor="var(--color-border-tertiary)"};
+  });
+}
+
+function renderInd(){
+  const p=PROJECTS.find(x=>x.id===activeP);const c=col();
+  const ind=document.getElementById("projInd");
+  ind.style.cssText=`display:flex;align-items:center;gap:8px;padding:7px 11px;border-radius:4px;border:0.5px solid ${c}44;border-left:3px solid ${c};margin-bottom:14px`;
+  document.getElementById("projDot").style.background=c;
+  document.getElementById("projName").textContent=p.label;
+  document.getElementById("projTag").textContent=activeView==="svd"?"SVD LAYER MAPPING":"FUNCTION MAPPING";
+}
+
+function renderToggle(){
+  document.getElementById("btnSvd").className=activeView==="svd"?"active":"";
+  document.getElementById("btnFn").className=activeView==="functions"?"active":"";
+}
+
+function makeTa(fid,rows){
+  const ta=document.createElement("textarea");ta.className="field-ta";
+  ta.rows=rows||2;ta.placeholder="Qui? Comment? Dans quel contexte?";
+  ta.value=get(fid);
+  ta.oninput=e=>set(fid,e.target.value);
+  ta.onfocus=()=>{ta.style.borderColor=col()};
+  ta.onblur=()=>{ta.style.borderColor="var(--color-border-tertiary)"};
+  return ta;
+}
+
+function renderView(){
+  const area=document.getElementById("viewArea");area.innerHTML="";
+  const c=col();
+  if(activeView==="svd"){
+    const flow=document.createElement("div");
+    flow.style.cssText="display:flex;align-items:center;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;gap:0;";
+    LAYERS.forEach((l,i)=>{
+      const nd=document.createElement("div");
+      nd.style.cssText="padding:3px 8px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:3px;font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono);white-space:nowrap;";
+      nd.textContent=l.icon+" "+l.label;flow.appendChild(nd);
+      const arr=document.createElement("div");
+      arr.style.cssText=`font-size:11px;padding:0 4px;color:${c};flex-shrink:0;`;
+      arr.textContent="→";flow.appendChild(arr);
+    });
+    const vn=document.createElement("div");
+    vn.style.cssText="padding:3px 8px;background:var(--color-background-success);border:0.5px solid var(--color-border-success);border-radius:3px;font-size:10px;color:var(--color-text-success);font-family:var(--font-mono);white-space:nowrap;";
+    vn.textContent="✦ Value";flow.appendChild(vn);
+    area.appendChild(flow);
+    LAYERS.forEach(l=>{
+      const card=document.createElement("div");card.className="layer-card";
+      const hdr=document.createElement("div");hdr.className="layer-hdr";
+      hdr.innerHTML=`<span style="color:${c};font-size:14px">${l.icon}</span><div><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">${l.label}</div><div style="font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono)">${l.sub}</div></div>`;
+      const body=document.createElement("div");body.className="layer-body";
+      const hint=document.createElement("div");hint.className="hint";hint.textContent=l.hint;
+      body.appendChild(hint);body.appendChild(makeTa(l.id,3));
+      card.appendChild(hdr);card.appendChild(body);area.appendChild(card);
+    });
+  } else {
+    FNS.forEach(fn=>{
+      const card=document.createElement("div");card.className="layer-card";
+      const hdr=document.createElement("div");hdr.className="layer-hdr";
+      hdr.innerHTML=`<span class="fn-tag" style="color:${c};background:${c}22">§${fn.sec}</span><div style="font-size:12px;font-weight:500;color:var(--color-text-primary)">${fn.label}</div>`;
+      const body=document.createElement("div");body.className="layer-body";
+      const h=document.createElement("div");h.className="hint";h.textContent=fn.hint;
+      body.appendChild(h);body.appendChild(makeTa(fn.id,2));
+      card.appendChild(hdr);card.appendChild(body);area.appendChild(card);
+    });
+  }
+}
+
+function switchView(v){activeView=v;renderToggle();renderInd();renderView()}
+
+function render(){
+  renderProjRow();
+  renderSection("visionCard","visionLabel","visionTa","vision",5,"◈ Vision","var(--color-background-secondary)",col()+"99");
+  renderSection("valCard","valLabel","valTa","value",5,"✦ Value Delivered",col()+"12",col());
+  renderJustCard();
+  renderInd();
+  renderToggle();
+  renderView();
+}
+
+render();
+</script>
