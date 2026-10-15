@@ -362,7 +362,12 @@
 
     /* ── Actualités (Facebook) ── */
     .fb-wrap { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 20px; margin-bottom: 40px; text-align: center; }
-    .fb-feed { width: 100%; max-width: 500px; height: 700px; display: block; margin: 0 auto; }
+    .home-split { display: grid; grid-template-columns: minmax(0, 1fr) 372px; gap: 32px; align-items: start; }
+    .home-side { position: sticky; top: 16px; }
+    .home-side .section-heading { margin-top: 0; }
+    .home-side .fb-wrap { padding: 16px; margin-bottom: 0; }
+    .fb-feed { width: 100%; max-width: 340px; height: 640px; display: block; margin: 0 auto; }
+    @media (max-width: 1000px) { .home-split { grid-template-columns: 1fr; } .home-side { position: static; } }
     .fb-link { margin-top: 12px; font-size: 13px; color: var(--text-muted); }
     .fb-link a { color: var(--navy); }
 
@@ -545,6 +550,8 @@
     <div class="fact-card"><div class="fc-val">5</div><div class="fc-label">Programmes suivis</div><div class="fc-detail">VIH/SIDA, Tuberculose, Malaria, SSR, Ressources Humaines</div></div>
   </div>
 
+  <div class="home-split">
+  <div class="home-main">
   <div class="section-heading"><h3>Direction &amp; Partenaires</h3><div class="section-rule"></div></div>
   <div class="info-grid">
     <div class="info-card">
@@ -579,11 +586,14 @@
       <span class="commune-tag">Sainte-Suzanne</span>
     </div>
   </div>
-
+  </div>
+  <aside class="home-side">
   <div class="section-heading"><h3>Actualités</h3><div class="section-rule"></div></div>
   <div class="fb-wrap">
-    <iframe class="fb-feed" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fp%2FDirection-Sanitaire-du-Nord-Est-61574802694574%2F&tabs=timeline&width=500&height=700&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" title="Publications Facebook de la Direction Sanitaire du Nord-Est" width="500" height="700" style="border:none;overflow:hidden" scrolling="no" frameborder="0" loading="lazy" allow="encrypted-media"></iframe>
+    <iframe class="fb-feed" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fp%2FDirection-Sanitaire-du-Nord-Est-61574802694574%2F&tabs=timeline&width=340&height=640&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" title="Publications Facebook de la Direction Sanitaire du Nord-Est" width="340" height="640" style="border:none;overflow:hidden" scrolling="no" frameborder="0" loading="lazy" allow="encrypted-media"></iframe>
     <p class="fb-link">Les publications ne s'affichent pas ? <a href="https://www.facebook.com/p/Direction-Sanitaire-du-Nord-Est-61574802694574/" target="_blank" rel="noopener">Voir la page Facebook de la DSNE</a></p>
+  </div>
+  </aside>
   </div>
 
   <div class="section-heading"><h3>État des Lieux Départemental</h3><div class="section-rule"></div></div>
