@@ -567,7 +567,7 @@
         <div class="partner-item"><div class="partner-dot"></div><div><div class="partner-name">ISPD / EpiC</div><div class="partner-desc">Appui VIH prolongé jusqu'à fin oct. 2026 (CMSO, CMSMO, Terrier Rouge) · appui MNCH terminé</div></div></div>
         <div class="partner-item"><div class="partner-dot"></div><div><div class="partner-name">CMMB</div><div class="partner-desc">Santé mère-enfant, VIH - HCR Trou-du-Nord</div></div></div>
         <div class="partner-item"><div class="partner-dot"></div><div><div class="partner-name">CRS - Catholic Relief Services</div><div class="partner-desc">Nutrition (rendez-vous à confirmer, fév. 2026)</div></div></div>
-        <div class="partner-item"><div class="partner-dot"></div><div><div class="partner-name">FHI 360</div><div class="partner-desc">Santé sexuelle et reproductive (SSR) · MNCH : reprise de 18 sites (1er oct. - 1er déc. 2026)</div></div></div>
+        <div class="partner-item"><div class="partner-dot"></div><div><div class="partner-name">FHI 360</div><div class="partner-desc">Santé sexuelle et reproductive (SSR) · MNCH : reprise de 18 sites (1er oct. - 1er déc. 2026)</div><div class="partner-desc">Hôpital de Fort-Liberté, CMS Ouanaminthe, CS Terrier-Rouge, CAL de Mombin Crochu, Dispensaire Acul Samedi, CS de Capotille, CSL de Dupity, CS de Bois de Laurence, CS de Carice, Dispensaire de Grosse Roche, Dispensaire Acul des Pins, CS de Sainte Suzanne, Dispensaire de Perches, Dispensaire de Savane au Lait, CMSMO, CSL de Vallières, Dispensaire de Ferrier, CSL de Savane Longue</div></div></div>
         <div class="partner-item"><div class="partner-dot"></div><div><div class="partner-name">Ma Santé mes Droits</div><div class="partner-desc">8 institutions · 2025-2032</div></div></div>
       </div>
     </div>
@@ -834,7 +834,7 @@ const DEFAULTS = {
     {nom:"CMMB",domaine:"Santé mère-enfant · VIH · Renforcement clinique",zones:"HCR Trou-du-Nord",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
     {nom:"C2C (Care 2 Communities)",domaine:"Mise en œuvre clinique directe - gestion complète du centre",zones:"CS Roche-Plate (UAS Trou-du-Nord)",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
     {nom:"ISPD",domaine:"MNCH (24 sites) : appui terminé · VIH : appui prolongé",zones:"CMSO · CMSMO · CS Terrier Rouge (VIH)",periode:"MNCH terminé · VIH jusqu'à fin oct. 2026",saisie:"Information DSNE, 14 oct. 2026"},
-    {nom:"FHI 360",domaine:"MNCH : reprise de 18 sites · Santé sexuelle et reproductive (SSR)",zones:"18 sites MNCH (liste à venir)",periode:"1er oct. - 1er déc. 2026",saisie:"Information DSNE, 14 oct. 2026"},
+    {nom:"FHI 360",domaine:"MNCH : reprise de 18 sites · Santé sexuelle et reproductive (SSR)",zones:"Hôpital de Fort-Liberté, CMS Ouanaminthe, CS Terrier-Rouge, CAL de Mombin Crochu, Dispensaire Acul Samedi, CS de Capotille, CSL de Dupity, CS de Bois de Laurence, CS de Carice, Dispensaire de Grosse Roche, Dispensaire Acul des Pins, CS de Sainte Suzanne, Dispensaire de Perches, Dispensaire de Savane au Lait, CMSMO, CSL de Vallières, Dispensaire de Ferrier, CSL de Savane Longue",periode:"1er oct. - 1er déc. 2026",saisie:"Information DSNE, 14 oct. 2026"},
     {nom:"Croix Rouge Haïtienne / OIM",domaine:"Premiers secours · Support psychologique · Migrants · Formation 6 volontaires RLF",zones:"Frontière Ouanaminthe",periode:"Jan. 2026 - Jan. 2027",saisie:"Table Sectorielle, 19 fév. 2026"},
     {nom:"CARITAS Espagne + Mamos Unidas",domaine:"Santé · Cliniques mobiles (2/mois) · Formation MA et SSR · Personnel de soin",zones:"Ouanaminthe, Capotille, Trou-du-Nord, Welch, Barrière Battant",periode:"2023-2026 / 2025-2026",saisie:"Table Sectorielle, 19 fév. 2026"},
     {nom:"BID / IDB",domaine:"Financement réforme · Accès services essentiels - département",zones:"CS Terrier Rouge · Département",periode:"En cours",saisie:"EDL Annexe 1, Nov. 2025"},
@@ -902,10 +902,10 @@ const DEFAULTS = {
 
 /* ═══ STATE ═══ */
 let D, activeFilter='all';
-function load(){try{const r=localStorage.getItem('eldl_ne_v4');D=r?JSON.parse(r):deepClone(DEFAULTS)}catch(e){D=deepClone(DEFAULTS)}}
-function save(){D.savedAt=new Date().toISOString();try{localStorage.setItem('eldl_ne_v4',JSON.stringify(D))}catch(e){}flashSave();updateTs()}
+function load(){try{const r=localStorage.getItem('eldl_ne_v5');D=r?JSON.parse(r):deepClone(DEFAULTS)}catch(e){D=deepClone(DEFAULTS)}}
+function save(){D.savedAt=new Date().toISOString();try{localStorage.setItem('eldl_ne_v5',JSON.stringify(D))}catch(e){}flashSave();updateTs()}
 function deepClone(o){return JSON.parse(JSON.stringify(o))}
-function confirmReset(){if(confirm('Réinitialiser toutes les données aux valeurs par défaut ?')){localStorage.removeItem('eldl_ne_v4');D=deepClone(DEFAULTS);renderAll();initMap()}}
+function confirmReset(){if(confirm('Réinitialiser toutes les données aux valeurs par défaut ?')){localStorage.removeItem('eldl_ne_v5');D=deepClone(DEFAULTS);renderAll();initMap()}}
 function flashSave(){const e=document.getElementById('saveFlash');e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
 function updateTs(){const e=document.getElementById('tsDisplay');if(!D||!D.savedAt)return;const d=new Date(D.savedAt);e.textContent='Mis à jour le '+d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
 function onBlur(k,el){D[k]=el.textContent.trim();save()}
