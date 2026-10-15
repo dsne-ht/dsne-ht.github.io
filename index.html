@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Direction Sanitaire du Nord-Est | DSNE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -12,24 +12,24 @@
   <!-- ═══ MAIN SITE STYLES ═══ -->
   <style>
     :root {
-      --navy:        #0f1f3d;
-      --navy-mid:    #162b52;
-      --navy-light:  #1e3a6e;
-      --gold:        #b8972a;
-      --gold-light:  #d4af4a;
+      --navy:        #042f23;
+      --navy-mid:    #064e3b;
+      --navy-light:  #047857;
+      --gold:        #059669;
+      --gold-light:  #6ee7b7;
       --white:       #ffffff;
-      --off-white:   #f7f8fa;
-      --border:      #dde2ec;
-      --text:        #1a2235;
-      --text-mid:    #4a5568;
-      --text-muted:  #8a97ad;
+      --off-white:   #f1f8f5;
+      --border:      #d1e7dd;
+      --text:        #0b2218;
+      --text-mid:    #3d5a4d;
+      --text-muted:  #6b8678;
       --red:         #c0392b;
       --green:       #1a7a4a;
       --green-light: #eaf4ee;
       --orange:      #b45309;
-      --shadow-sm:   0 1px 4px rgba(15,31,61,0.08);
-      --shadow-md:   0 4px 20px rgba(15,31,61,0.12);
-      --shadow-lg:   0 8px 40px rgba(15,31,61,0.18);
+      --shadow-sm:   0 1px 4px rgba(4,47,35,0.08);
+      --shadow-md:   0 4px 20px rgba(4,47,35,0.12);
+      --shadow-lg:   0 8px 40px rgba(4,47,35,0.18);
       --radius:      8px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -182,7 +182,7 @@
     .fi-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
     .dot-red { background: var(--red); } .dot-gold { background: var(--gold); } .dot-green { background: var(--green); }
     .rec-list { display: flex; flex-direction: column; gap: 8px; }
-    .rec-item { background: rgba(14,100,100,0.05); border-left: 3px solid var(--navy-light); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.55; }
+    .rec-item { background: rgba(16,185,129,0.05); border-left: 3px solid var(--navy-light); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.55; }
     .mini-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
     .locked-msg { text-align: center; padding: 80px 40px; color: var(--text-muted); }
     .locked-msg .lm-icon { font-size: 38px; margin-bottom: 16px; opacity: 0.35; }
@@ -208,7 +208,7 @@
     .form-group { margin-bottom: 18px; }
     .form-group label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 7px; }
     .form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: var(--text); background: #fff; transition: border-color 0.15s, box-shadow 0.15s; outline: none; }
-    .form-group input:focus { border-color: var(--navy-light); box-shadow: 0 0 0 3px rgba(30,58,110,0.10); }
+    .form-group input:focus { border-color: var(--navy-light); box-shadow: 0 0 0 3px rgba(16,185,129,0.10); }
     .form-group input.error { border-color: var(--red); }
     .btn-primary-login { width: 100%; padding: 13px; background: var(--navy); color: #fff; border: none; border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.18s; letter-spacing: 0.03em; margin-top: 6px; }
     .btn-primary-login:hover { background: var(--navy-light); }
@@ -239,10 +239,10 @@
     .data-table thead th { background: var(--navy); color: rgba(255,255,255,0.85); padding: 12px 16px; text-align: left; font-weight: 500; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
     .data-table tbody td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; white-space: nowrap; }
     .data-table tbody tr:last-child td { border-bottom: none; }
-    .data-table tbody tr:hover td { background: #f0f4fb; }
+    .data-table tbody tr:hover td { background: #ecf8f2; }
     .load-row td { text-align: center; padding: 48px !important; color: var(--text-muted); font-size: 14px; white-space: normal; }
     .carte-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; color: white; }
-    .carte-direction { background: #1e3a8a; } .carte-comptabilite { background: #6b4f47; } .carte-rh { background: #9b2226; } .carte-default { background: #4a5568; }
+    .carte-direction { background: #1e3a8a; } .carte-comptabilite { background: #6b4f47; } .carte-rh { background: #9b2226; } .carte-default { background: #3d5a4d; }
     .vstatus-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 600; }
     .vstatus-utilisation { background: #fde8e8; color: var(--red); }
     .vstatus-remise { background: var(--green-light); color: var(--green); }
@@ -273,6 +273,120 @@
       .steps-row { grid-template-columns: 1fr; }
       .login-card { padding: 32px 24px; }
     }
+  </style>
+
+  <!-- ═══ GREEN TECH THEME ═══ -->
+  <style>
+    /* Keep the État des Lieux Départemental exactly as it was:
+       give it back the original values of every site-wide variable. */
+    .edl-scope {
+      --navy-light:#1e3a6e; --gold:#b8972a; --gold-light:#d4af4a; --white:#ffffff;
+      --off-white:#f7f8fa; --text-mid:#4a5568; --text-muted:#8a97ad; --green-light:#eaf4ee;
+      --orange:#b45309; --radius:8px;
+      --shadow-sm:0 1px 4px rgba(15,31,61,0.08);
+      --shadow-md:0 4px 20px rgba(15,31,61,0.12);
+      --shadow-lg:0 8px 40px rgba(15,31,61,0.18);
+    }
+
+    /* ── Site palette ── */
+    :root {
+      --navy:#042f23; --navy-mid:#064e3b; --navy-light:#047857;
+      --gold:#059669; --gold-light:#6ee7b7;
+      --off-white:#f1f8f5; --border:#d1e7dd;
+      --text:#0b2218; --text-mid:#3d5a4d; --text-muted:#6b8678;
+      --glow:#34d399; --mono:'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+      --grad-dark:linear-gradient(120deg,#021a14 0%,#043d2c 48%,#0a7a55 100%);
+      --grad-accent:linear-gradient(135deg,#047857 0%,#10b981 100%);
+    }
+
+    body {
+      background:
+        radial-gradient(900px 480px at 92% -8%, rgba(16,185,129,0.12), transparent 62%),
+        radial-gradient(760px 420px at -8% 6%, rgba(45,212,191,0.09), transparent 58%),
+        var(--off-white);
+      background-attachment: fixed;
+    }
+
+    /* ── Header ── */
+    .site-header { background: var(--grad-dark); border-bottom: 1px solid rgba(110,231,183,0.28); }
+    .site-header::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(110,231,183,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110,231,183,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+      -webkit-mask-image: linear-gradient(90deg, transparent 5%, #000 75%);
+      mask-image: linear-gradient(90deg, transparent 5%, #000 75%);
+    }
+    .site-header::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; pointer-events: none;
+      background: linear-gradient(90deg, transparent, var(--glow), transparent); opacity: 0.7;
+    }
+    .site-header > * { position: relative; z-index: 1; }
+    .brand-text .brand-sup { font-family: var(--mono); letter-spacing: 0.16em; }
+    .nav-item:hover { background: rgba(110,231,183,0.08); }
+    .nav-item.active { text-shadow: 0 0 14px rgba(110,231,183,0.55); }
+
+    /* ── Hero ── */
+    .hero-strip {
+      background: var(--grad-dark);
+      border: 1px solid rgba(110,231,183,0.24);
+      box-shadow: 0 12px 40px rgba(4,47,35,0.28), inset 0 0 70px rgba(16,185,129,0.10);
+    }
+    .hero-strip::before { background: linear-gradient(90deg, #10b981, #6ee7b7, #2dd4bf, #10b981); }
+    .hero-strip::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(110,231,183,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110,231,183,0.06) 1px, transparent 1px);
+      background-size: 30px 30px;
+      -webkit-mask-image: radial-gradient(ellipse at 85% 30%, #000 0%, transparent 70%);
+      mask-image: radial-gradient(ellipse at 85% 30%, #000 0%, transparent 70%);
+    }
+    .hero-strip > * { position: relative; z-index: 1; }
+    .hero-left .hero-eyebrow { font-family: var(--mono); letter-spacing: 0.18em; }
+    .hero-left .hero-sub { color: rgba(255,255,255,0.62); }
+    .hero-stat .hs-val { font-family: var(--mono); font-weight: 500; text-shadow: 0 0 20px rgba(110,231,183,0.35); }
+
+    /* ── Cards ── */
+    .fact-card::after { background: linear-gradient(90deg, #10b981, #6ee7b7); }
+    .fact-card .fc-val, .metric .m-val, .hr-stat .hs-val { font-family: var(--mono); font-weight: 500; }
+    .fact-card, .info-card { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+    .fact-card:hover, .info-card:hover {
+      transform: translateY(-2px); border-color: rgba(16,185,129,0.45);
+      box-shadow: 0 10px 28px rgba(16,185,129,0.16);
+    }
+    .section-rule { background: linear-gradient(90deg, rgba(16,185,129,0.45), transparent); }
+    .info-card h4, .communes-wrap h4 { font-family: var(--mono); letter-spacing: 0.1em; }
+    .person-avatar { background: var(--grad-accent); color: #fff; }
+    .partner-dot { box-shadow: 0 0 8px rgba(16,185,129,0.7); }
+    .commune-tag:hover { border-color: #10b981; color: var(--navy-light); background: #ecfdf5; }
+    .title-rule { background: linear-gradient(90deg, #10b981, #6ee7b7); }
+    .p-card-icon, .lc-icon { background: var(--grad-accent); }
+    .rec-item { background: rgba(16,185,129,0.06); border-left-color: #10b981; }
+
+    /* ── Tabs inside pages ── */
+    .q-tab.active { background: var(--grad-dark); }
+    .prog-tab.active { background: var(--grad-accent); border-color: #10b981; }
+    .prog-tab:hover { border-color: #10b981; }
+
+    /* ── Tables and buttons ── */
+    .site-table th, .data-table thead th { background: var(--grad-dark); }
+    .btn-action, .btn-remise, .btn-primary-login { background: var(--grad-accent); border: none; }
+    .btn-action:hover, .btn-remise:hover, .btn-primary-login:hover {
+      background: linear-gradient(135deg, #059669 0%, #34d399 100%);
+      box-shadow: 0 6px 20px rgba(16,185,129,0.35);
+    }
+    .btn-remise:disabled { background: var(--border); box-shadow: none; }
+    .step-block { border-left-color: #10b981; }
+    .form-group input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.16); }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--grad-dark); color: rgba(255,255,255,0.7);
+      border-top: 1px solid rgba(110,231,183,0.28); font-family: var(--mono); letter-spacing: 0.04em;
+    }
+
   </style>
 
   <!-- ═══ EDL SCOPED STYLES ═══ -->
@@ -415,8 +529,6 @@
   <nav class="site-nav">
     <div class="nav-item active" onclick="switchTab('dsne', this)">🏛 DSNE</div>
     <div class="nav-item" onclick="switchTab('bilans', this)">📋 Bilans Trimestriels</div>
-    <div class="nav-item" onclick="switchTab('rapportage', this)">📊 Rapportage</div>
-    <div class="nav-item" onclick="switchTab('visites', this)">🚪 Portail de Réception</div>
     <div class="nav-item" onclick="switchTab('gouvernance', this)">⚙ Gouvernance</div>
   </nav>
 </header>
@@ -1241,24 +1353,8 @@ window.addEventListener('load',initMap);
 
     <!-- LABORATOIRE -->
     <div class="prog-panel" id="prog-labo">
-      <!-- EPI LOGIN GATE -->
-      <div id="epi-wall-labo" class="login-wall" style="display:none;">
-        <div class="login-card">
-          <div class="lc-icon"><svg width="22" height="22" fill="none" stroke="#d4af4a" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-          <h3>Accès Épidémiologie</h3>
-          <p class="login-desc">Cette section est réservée à l'équipe d'épidémiologie et de surveillance de la DSNE.</p>
-          <div class="form-group"><label>Nom complet</label><input type="text" id="epi-name-labo" placeholder="Prénom Nom" autocomplete="name"/></div>
-          <div class="form-group"><label>Code d'accès</label><input type="password" id="epi-code-labo" placeholder="••••••" autocomplete="off"/></div>
-          <button class="btn-primary-login" onclick="handleEpiLogin('labo')">Se connecter</button>
-          <div class="login-error" id="epi-error-labo">Nom ou code incorrect.</div>
-        </div>
-      </div>
       <!-- EPI CONTENT -->
-      <div id="epi-content-labo" style="display:none;">
-        <div class="welcome-bar" style="margin-bottom:20px;">
-          <div>Connecté : <span id="epi-welcome-labo"></span></div>
-          <button class="logout-btn" onclick="handleEpiLogout('labo')">Se déconnecter</button>
-        </div>
+      <div id="epi-content-labo">
       <div class="p-card"><div class="p-card-header"><div class="p-card-icon">🔬</div><div><h4>Programme Laboratoire</h4><div class="p-card-sub">Responsable : Yves J. Lusca — Technologiste Médical Départemental</div></div></div>
       <div class="p-card-body">
         <div class="mini-title">Points forts observés</div>
@@ -1301,24 +1397,8 @@ window.addEventListener('load',initMap);
 
     <!-- SURVEILLANCE -->
     <div class="prog-panel" id="prog-surveillance">
-      <!-- EPI LOGIN GATE -->
-      <div id="epi-wall-surveillance" class="login-wall" style="display:none;">
-        <div class="login-card">
-          <div class="lc-icon"><svg width="22" height="22" fill="none" stroke="#d4af4a" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-          <h3>Accès Épidémiologie</h3>
-          <p class="login-desc">Cette section est réservée à l'équipe d'épidémiologie et de surveillance de la DSNE.</p>
-          <div class="form-group"><label>Nom complet</label><input type="text" id="epi-name-surveillance" placeholder="Prénom Nom" autocomplete="name"/></div>
-          <div class="form-group"><label>Code d'accès</label><input type="password" id="epi-code-surveillance" placeholder="••••••" autocomplete="off"/></div>
-          <button class="btn-primary-login" onclick="handleEpiLogin('surveillance')">Se connecter</button>
-          <div class="login-error" id="epi-error-surveillance">Nom ou code incorrect.</div>
-        </div>
-      </div>
       <!-- EPI CONTENT -->
-      <div id="epi-content-surveillance" style="display:none;">
-        <div class="welcome-bar" style="margin-bottom:20px;">
-          <div>Connecté : <span id="epi-welcome-surveillance"></span></div>
-          <button class="logout-btn" onclick="handleEpiLogout('surveillance')">Se déconnecter</button>
-        </div>
+      <div id="epi-content-surveillance">
       <div class="p-card"><div class="p-card-header"><div class="p-card-icon">📡</div><div><h4>Surveillance Épidémiologique</h4><div class="p-card-sub">Service d'Épidémiologie &amp; Statistique — Janvier à Mars 2026</div></div></div>
       <div class="p-card-body">
         <div class="mini-title">Réseau de Surveillance</div>
@@ -1386,24 +1466,8 @@ window.addEventListener('load',initMap);
 
     <!-- EDIR -->
     <div class="prog-panel" id="prog-edir">
-      <!-- EPI LOGIN GATE -->
-      <div id="epi-wall-edir" class="login-wall" style="display:none;">
-        <div class="login-card">
-          <div class="lc-icon"><svg width="22" height="22" fill="none" stroke="#d4af4a" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-          <h3>Accès Épidémiologie</h3>
-          <p class="login-desc">Cette section est réservée à l'équipe d'épidémiologie et de surveillance de la DSNE.</p>
-          <div class="form-group"><label>Nom complet</label><input type="text" id="epi-name-edir" placeholder="Prénom Nom" autocomplete="name"/></div>
-          <div class="form-group"><label>Code d'accès</label><input type="password" id="epi-code-edir" placeholder="••••••" autocomplete="off"/></div>
-          <button class="btn-primary-login" onclick="handleEpiLogin('edir')">Se connecter</button>
-          <div class="login-error" id="epi-error-edir">Nom ou code incorrect.</div>
-        </div>
-      </div>
       <!-- EPI CONTENT -->
-      <div id="epi-content-edir" style="display:none;">
-        <div class="welcome-bar" style="margin-bottom:20px;">
-          <div>Connecté : <span id="epi-welcome-edir"></span></div>
-          <button class="logout-btn" onclick="handleEpiLogout('edir')">Se déconnecter</button>
-        </div>
+      <div id="epi-content-edir">
       <div class="p-card"><div class="p-card-header"><div class="p-card-icon">🚨</div><div><h4>EDIR — Épidémiologie, Intervention &amp; Réponse</h4><div class="p-card-sub">Période couverte : 1er au 31 Mars 2026</div></div></div>
       <div class="p-card-body">
         <div class="mini-title">Contexte</div>
@@ -1854,72 +1918,8 @@ window.addEventListener('load',initMap);
 </div><!-- /tab-bilans -->
 
 
-<!-- ══════════════ TAB: VISITES ══════════════ -->
-<div class="panel" id="tab-visites">
 
-  <!-- ENREGISTREMENT -->
-  <div id="vis-enr-section">
-    <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;">
-      <button class="prog-tab active" onclick="switchVisSection('enr',this)">🔒 Enregistrement</button>
-      <button class="prog-tab" onclick="switchVisSection('reg',this)">🔒 Registre de Visites</button>
-    </div>
-
-    <!-- ENR WALL -->
-    <div id="vis-enr-panel">
-      <div class="login-wall" id="wall-enr">
-        <div class="login-card">
-          <div class="lc-icon"><svg width="22" height="22" fill="none" stroke="#d4af4a" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-          <h3>Accès Réservé</h3>
-          <p class="login-desc">Cette section est réservée au personnel autorisé de la DSNE.</p>
-          <div class="form-group"><label>Nom complet</label><input type="text" id="enr-name" placeholder="Prénom Nom" autocomplete="name"/></div>
-          <div class="form-group"><label>Code d'accès</label><input type="password" id="enr-code" placeholder="••••••" autocomplete="off"/></div>
-          <button class="btn-primary-login" onclick="handleLogin('enr')">Se connecter</button>
-          <div class="login-error" id="enr-error">Nom ou code incorrect.</div>
-        </div>
-      </div>
-      <div id="enr-content" style="display:none;">
-        <div class="welcome-bar"><div>Connecté : <span id="enr-welcome"></span></div><button class="logout-btn" onclick="handleLogout('enr')">Se déconnecter</button></div>
-        <div class="page-title"><h2>Enregistrement de Visites</h2><p>Formulaire d'accueil pour les visiteurs de la DSNE</p><div class="title-rule"></div></div>
-        <div class="action-card">
-          <h3>Formulaire d'Enregistrement</h3>
-          <p>Cliquez pour ouvrir le formulaire. Munissez-vous de la pièce d'identité du visiteur avant de commencer.</p>
-          <a href="https://forms.gle/spcQtQZDVzgBPmbQ9" class="btn-action" target="_blank" rel="noopener">+ &nbsp;Enregistrer une visite</a>
-        </div>
-        <div class="steps-row">
-          <div class="step-block"><div class="step-num">Étape 1</div><p>Cliquez sur le bouton. Prenez la pièce d'identité du visiteur et saisissez toutes les informations dans le formulaire.</p></div>
-          <div class="step-block"><div class="step-num">Étape 2</div><p>Remettez au visiteur la carte correspondant au service visité et notez son numéro dans le formulaire.</p></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REGISTRE — Google Sheet direct link -->
-    <div id="vis-reg-panel" style="display:none;">
-      <div class="page-title">
-        <h2>Registre de Visites</h2>
-        <p>Accès sécurisé via votre compte Google autorisé</p>
-        <div class="title-rule"></div>
-      </div>
-      <div class="action-card">
-        <div style="font-size:36px;margin-bottom:16px;">📋</div>
-        <h3>Registre de Visites — DSNE</h3>
-        <p>Le registre est hébergé sur Google Sheets et protégé par votre compte Google. Cliquez ci-dessous pour l'ouvrir. Si vous n'avez pas accès, contactez la direction pour faire ajouter votre compte.</p>
-        <a href="https://docs.google.com/spreadsheets/d/1VGUm9KutnebwPBJCeOu9sa6sUY8w2kp9jEDY8u_Aj6Q" class="btn-action" target="_blank" rel="noopener">
-          Ouvrir le Registre ↗
-        </a>
-        <div style="margin-top:24px;padding:16px;background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius);text-align:left;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Comptes autorisés</div>
-          <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin:0;">
-            Seuls les comptes Google partagés par la DSNE ont accès au registre.<br>
-            Google bloquera automatiquement tout autre compte.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /tab-visites -->
-
-<!-- ══════════════ TAB: RAPPORTAGE ══════════════ -->
+<!-- ══════════════ TAB: GOUVERNANCE ══════════════ -->
 <div class="panel" id="tab-gouvernance">
 <div class="page-content">
 
@@ -2008,78 +2008,6 @@ window.addEventListener('load',initMap);
 </div>
 </div>
 
-<div class="panel" id="tab-rapportage">
-
-  <div class="hero-strip">
-    <div class="hero-left">
-      <div class="hero-eyebrow">DSNE · Déc 2025 – Nov 2026</div>
-      <h2>Suivi du <em>Rapportage</em> Institutionnel</h2>
-      <p class="hero-sub">Conformité mensuelle des rapports FIN, RH et EPI par institution — données en temps réel.</p>
-    </div>
-    <div class="hero-right">
-      <div class="hero-stat"><div class="hs-val" id="rp-total-inst">—</div><div class="hs-label">Institutions</div></div>
-      <div class="hero-stat"><div class="hs-val" id="rp-conformite">—</div><div class="hs-label">Conformité globale</div></div>
-    </div>
-  </div>
-
-  <!-- KPI CARDS -->
-  <div class="facts-row">
-    <div class="fact-card"><div class="fc-val" id="rp-kpi-recus">—</div><div class="fc-label">Rapports reçus</div><div class="fc-detail">Total cumulé FIN + RH + EPI</div></div>
-    <div class="fact-card"><div class="fc-val" id="rp-kpi-manquants">—</div><div class="fc-label">Manquants</div><div class="fc-detail">Non soumis à ce jour</div></div>
-    <div class="fact-card"><div class="fc-val" id="rp-kpi-retard">—</div><div class="fc-label">En retard</div><div class="fc-detail">Soumis hors délai</div></div>
-    <div class="fact-card"><div class="fc-val" id="rp-kpi-mois">—</div><div class="fc-label">Mois couverts</div><div class="fc-detail">Déc 2025 → Nov 2026</div></div>
-  </div>
-
-  <!-- PROG FILTER -->
-  <div class="section-heading"><h3>Vue par Programme</h3><div class="section-rule"></div></div>
-  <div class="prog-nav">
-    <div class="prog-tab active" onclick="rpSetProg('all',this)">Tous</div>
-    <div class="prog-tab" onclick="rpSetProg('FIN',this)">💰 Comptabilité (FIN)</div>
-    <div class="prog-tab" onclick="rpSetProg('RH',this)">👥 Ressources Humaines (RH)</div>
-    <div class="prog-tab" onclick="rpSetProg('EPI',this)">🔬 Épidémiologie (EPI)</div>
-  </div>
-
-  <!-- HEATMAP -->
-  <div class="section-heading"><h3>Tableau de Conformité</h3><div class="section-rule"></div></div>
-  <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px 24px;box-shadow:var(--shadow-sm);margin-bottom:28px;">
-    <div id="rp-loading" style="text-align:center;padding:60px;color:var(--text-muted);font-size:14px;">
-      <div style="font-size:28px;margin-bottom:12px">⏳</div>Chargement des données…
-    </div>
-    <div id="rp-error" style="display:none;text-align:center;padding:60px;color:var(--red);font-size:14px;">
-      <div style="font-size:28px;margin-bottom:12px">⚠️</div><span id="rp-error-msg">Erreur de chargement.</span>
-    </div>
-    <div id="rp-heatmap-wrap" style="display:none;overflow-x:auto;">
-      <table id="rp-heatmap" style="width:100%;border-collapse:collapse;font-size:11.5px;min-width:960px;"></table>
-    </div>
-  </div>
-
-  <!-- BAR CHART -->
-  <div class="section-heading"><h3>Taux de Conformité par Mois</h3><div class="section-rule"></div></div>
-  <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;box-shadow:var(--shadow-sm);margin-bottom:28px;">
-    <canvas id="rp-bar-chart" height="90"></canvas>
-  </div>
-
-  <!-- INSTITUTION TABLE -->
-  <div class="section-heading"><h3>Conformité par Institution</h3><div class="section-rule"></div></div>
-  <div style="background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:40px;overflow-x:auto;">
-    <table style="width:100%;border-collapse:collapse;font-size:13px;">
-      <thead>
-        <tr style="background:var(--navy);color:rgba(255,255,255,.85);">
-          <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;">Institution</th>
-          <th style="padding:10px 16px;text-align:center;font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;">Reçus</th>
-          <th style="padding:10px 16px;text-align:center;font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;">Manquants</th>
-          <th style="padding:10px 16px;text-align:center;font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;">En retard</th>
-          <th style="padding:10px 16px;text-align:center;font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;">% Conformité</th>
-          <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;min-width:140px;">Barre</th>
-        </tr>
-      </thead>
-      <tbody id="rp-inst-tbody"></tbody>
-    </table>
-  </div>
-
-  <div style="font-size:11px;color:var(--text-muted);text-align:right;margin-bottom:40px;" id="rp-last-updated"></div>
-
-</div><!-- /tab-rapportage -->
 
 </main>
 
@@ -2091,16 +2019,7 @@ window.addEventListener('load',initMap);
 <!-- ═══ MAIN SITE SCRIPT ═══ -->
 <script>
 /* ── TAB NAV ── */
-let govUnlocked = false;
-let govPendingEl = null;
-
 function switchTab(id, el) {
-  if (id === 'gouvernance' && !govUnlocked) {
-    govPendingEl = el;
-    document.getElementById('gov-login-overlay').style.display = 'flex';
-    setTimeout(() => document.getElementById('gov-login-name').focus(), 50);
-    return;
-  }
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
@@ -2108,39 +2027,6 @@ function switchTab(id, el) {
   if (id === 'dsne') {
     setTimeout(() => { if (typeof initMap === 'function' && typeof leafletMap !== 'undefined') { try { initMap(); } catch(e){} } }, 100);
   }
-}
-
-function govLoginSubmit() {
-  const name = document.getElementById('gov-login-name').value.trim();
-  const pass = document.getElementById('gov-login-pass').value.trim();
-  const ans  = document.getElementById('gov-login-ans').value.trim().toLowerCase();
-  const err  = document.getElementById('gov-login-err');
-
-  const nameOk = name.toLowerCase() === 'daisha dorsainvil';
-  const passOk = pass === '120110';
-  const ansOk  = ans === 'program manager';
-
-  if (nameOk && passOk && ansOk) {
-    govUnlocked = true;
-    document.getElementById('gov-login-overlay').style.display = 'none';
-    document.getElementById('gov-login-name').value = '';
-    document.getElementById('gov-login-pass').value = '';
-    document.getElementById('gov-login-ans').value = '';
-    err.style.display = 'none';
-    switchTab('gouvernance', govPendingEl);
-  } else {
-    err.style.display = 'block';
-    err.textContent = 'Identifiants incorrects. Veuillez réessayer.';
-  }
-}
-
-function govLoginKeydown(e) {
-  if (e.key === 'Enter') govLoginSubmit();
-}
-
-function govLoginCancel() {
-  document.getElementById('gov-login-overlay').style.display = 'none';
-  document.getElementById('gov-login-err').style.display = 'none';
 }
 
 /* ── QUARTER NAV ── */
@@ -2159,416 +2045,17 @@ function switchProg(id, el) {
   qpanel.querySelectorAll('.prog-panel').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('prog-' + id).classList.add('active');
-  // Show epi gate if applicable
-  if (['labo','surveillance','edir'].includes(id)) showEpiGate(id);
 }
-
-/* ── VISITES SUB-NAV ── */
-function switchVisSection(id, el) {
-  document.querySelectorAll('#tab-visites .prog-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('vis-enr-panel').style.display = id === 'enr' ? 'block' : 'none';
-  document.getElementById('vis-reg-panel').style.display = id === 'reg' ? 'block' : 'none';
-}
-
-/* ── AUTH ── */
-const ACCESS_CODE = '120110';
-const ALLOWED = ['renande destine','judeline fenelus','daisha dorsainvil','geralda michel','vasna pierre','sarah shammah pierre','macienne clement','wilmore jole','marie liziane'];
-
-/* ── EPI ACCESS (Surveillance, EDIR, Laboratoire) ── */
-const EPI_CODE = '1824';
-const EPI_ALLOWED = ['daisha dorsainvil','adam gedeon','lusca jacquelin','wilmore jole','wisquenndy michel'];
-let epiLoggedIn = false, epiCurrentUser = '';
-let loggedIn = false, currentUser = '';
-
-function norm(s) { return s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
-function checkName(input) {
-  const n = norm(input), parts = n.split(' ');
-  for (const a of ALLOWED) {
-    const an = norm(a), ap = an.split(' ');
-    if (n === an) return true;
-    if (an === 'marie liziane' && parts[0] === 'marie') return true;
-    if (parts.length >= 2 && ap[0] === parts[0] && an.includes(parts[1])) return true;
-  }
-  return false;
-}
-
-function handleLogin(prefix) {
-  const nameEl = document.getElementById(prefix+'-name');
-  const codeEl = document.getElementById(prefix+'-code');
-  const errEl  = document.getElementById(prefix+'-error');
-  if (checkName(nameEl.value) && codeEl.value.trim() === ACCESS_CODE) {
-    loggedIn = true; currentUser = nameEl.value.trim();
-    errEl.classList.remove('visible');
-    nameEl.classList.remove('error'); codeEl.classList.remove('error');
-    showVisContent(prefix);
-  } else {
-    errEl.classList.add('visible');
-    nameEl.classList.add('error'); codeEl.classList.add('error');
-  }
-}
-
-function showVisContent(prefix) {
-  document.getElementById('wall-'+prefix).style.display = 'none';
-  document.getElementById(prefix+'-content').style.display = 'block';
-  document.getElementById(prefix+'-welcome').textContent = currentUser;
-}
-
-function handleLogout(prefix) {
-  const other = prefix === 'enr' ? 'reg' : 'enr';
-  const otherOpen = document.getElementById(other+'-content').style.display === 'block';
-  if (!otherOpen) { loggedIn = false; currentUser = ''; }
-  document.getElementById('wall-'+prefix).style.display = 'flex';
-  document.getElementById(prefix+'-content').style.display = 'none';
-  document.getElementById(prefix+'-name').value = '';
-  document.getElementById(prefix+'-code').value = '';
-  document.getElementById(prefix+'-name').classList.remove('error');
-  document.getElementById(prefix+'-code').classList.remove('error');
-  document.getElementById(prefix+'-error').classList.remove('visible');
-}
-
-/* ── REGISTRE — opens Google Sheet directly ── */
-
-
-
-
-
-/* ── ENTER KEY ── */
-document.addEventListener('DOMContentLoaded', () => {
-  [['enr-name','enr'],['enr-code','enr'],['reg-name','reg'],['reg-code','reg']].forEach(([id,prefix]) => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(prefix); });
-  });
-});
-
-
-
-/* ── EPI AUTH (Surveillance, EDIR, Laboratoire) ── */
-const EPI_PANELS = ['labo', 'surveillance', 'edir'];
-
-function showEpiGate(progId) {
-  // Show login wall, hide content
-  document.getElementById('epi-wall-' + progId).style.display = 'flex';
-  document.getElementById('epi-content-' + progId).style.display = 'none';
-  // If already logged in, skip gate
-  if (epiLoggedIn) {
-    document.getElementById('epi-wall-' + progId).style.display = 'none';
-    document.getElementById('epi-content-' + progId).style.display = 'block';
-    document.getElementById('epi-welcome-' + progId).textContent = epiCurrentUser;
-  }
-}
-
-function handleEpiLogin(progId) {
-  const nameEl  = document.getElementById('epi-name-' + progId);
-  const codeEl  = document.getElementById('epi-code-' + progId);
-  const errEl   = document.getElementById('epi-error-' + progId);
-  const n = norm(nameEl.value);
-  const ok = EPI_ALLOWED.some(a => {
-    const an = norm(a), ap = an.split(' '), ip = n.split(' ');
-    if (n === an) return true;
-    if (ip.length >= 2 && ap[0] === ip[0] && an.includes(ip[1])) return true;
-    return false;
-  }) && codeEl.value.trim() === EPI_CODE;
-
-  if (ok) {
-    epiLoggedIn = true;
-    epiCurrentUser = nameEl.value.trim();
-    errEl.classList.remove('visible');
-    nameEl.classList.remove('error'); codeEl.classList.remove('error');
-    // Show content for this panel and all other epi panels that are open
-    EPI_PANELS.forEach(id => {
-      const wall = document.getElementById('epi-wall-' + id);
-      const cont = document.getElementById('epi-content-' + id);
-      const wel  = document.getElementById('epi-welcome-' + id);
-      if (wall) wall.style.display = 'none';
-      if (cont) cont.style.display = 'block';
-      if (wel)  wel.textContent = epiCurrentUser;
-    });
-  } else {
-    errEl.classList.add('visible');
-    nameEl.classList.add('error'); codeEl.classList.add('error');
-  }
-}
-
-function handleEpiLogout(progId) {
-  epiLoggedIn = false; epiCurrentUser = '';
-  EPI_PANELS.forEach(id => {
-    const wall = document.getElementById('epi-wall-' + id);
-    const cont = document.getElementById('epi-content-' + id);
-    const ne   = document.getElementById('epi-name-' + id);
-    const ce   = document.getElementById('epi-code-' + id);
-    const err  = document.getElementById('epi-error-' + id);
-    if (wall) wall.style.display = 'flex';
-    if (cont) cont.style.display = 'none';
-    if (ne)  { ne.value = ''; ne.classList.remove('error'); }
-    if (ce)  { ce.value = ''; ce.classList.remove('error'); }
-    if (err)  err.classList.remove('visible');
-  });
-}
-
-// Enter key support for epi login fields
-document.addEventListener('DOMContentLoaded', () => {
-  EPI_PANELS.forEach(id => {
-    const ne = document.getElementById('epi-name-' + id);
-    const ce = document.getElementById('epi-code-' + id);
-    if (ne) ne.addEventListener('keydown', e => { if(e.key==='Enter') handleEpiLogin(id); });
-    if (ce) ce.addEventListener('keydown', e => { if(e.key==='Enter') handleEpiLogin(id); });
-  });
-});
 
 </script>
 
-<!-- ═══ RAPPORTAGE SCRIPT ═══ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<!-- ═══ GOUVERNANCE SCRIPT ═══ -->
 <script>
-/* ══════════════════════════════════════════════
-   RAPPORTAGE — Live Google Sheets integration
-   Structure: Institution | Déc [FIN,RH,EPI] | Jan [FIN,RH,EPI] | … | Nov [FIN,RH,EPI]
-   + summary cols: Reçus, Manquants, En retard, % Conformité
-   Legend values: "Reçu" | "" | "En retard" | "Manquant"
-══════════════════════════════════════════════ */
-
-/* ── EMBEDDED DATA — exported from Google Sheets 43 institutions ── */
-const RP_EMBEDDED = [{"inst": "CS ND de Lourdes (Grand Bassin)", "recus": 8, "manquants": 0, "retard": 0, "conformite": 22.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CS Bethesda (Grand Bassin)(privé)", "recus": 3, "manquants": 0, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Danda", "recus": 3, "manquants": 0, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CEMEFCO (privé)", "recus": 3, "manquants": 0, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "N/A", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Clinique Eben-Ezer de Fort-Liberte (privé)", "recus": 3, "manquants": 0, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "N/A", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CS de Terrier-Rouge", "recus": 3, "manquants": 0, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CAL de Mombin-Crochu", "recus": 6, "manquants": 2, "retard": 0, "conformite": 17.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Dupity", "recus": 4, "manquants": 0, "retard": 0, "conformite": 11.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Merande", "recus": 5, "manquants": 3, "retard": 0, "conformite": 14.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Manquant", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Lamine", "recus": 5, "manquants": 1, "retard": 0, "conformite": 14.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Phaeton", "recus": 4, "manquants": 2, "retard": 0, "conformite": 11.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CDI de Trou du Nord", "recus": 3, "manquants": 1, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Manquant", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Clinique Esperance et Vie (privé)", "recus": 2, "manquants": 1, "retard": 0, "conformite": 6.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Manquant"}, "Jan": {"FIN": "", "RH": "N/A", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Hopital de Fort-Liberte", "recus": 3, "manquants": 1, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Manquant"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CAL de Capotille", "recus": 8, "manquants": 0, "retard": 0, "conformite": 22.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CS de Bois de Laurence", "recus": 6, "manquants": 1, "retard": 0, "conformite": 17.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Caracol", "recus": 6, "manquants": 0, "retard": 0, "conformite": 17.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Leroux Cachiman", "recus": 6, "manquants": 0, "retard": 0, "conformite": 17.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Gens de Nantes", "recus": 4, "manquants": 0, "retard": 0, "conformite": 11.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Acul Samedi", "recus": 5, "manquants": 0, "retard": 0, "conformite": 14.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Derac", "recus": 5, "manquants": 1, "retard": 0, "conformite": 14.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Acul des Pins", "recus": 3, "manquants": 0, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CSL de Vallieres", "recus": 5, "manquants": 1, "retard": 0, "conformite": 14.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CAL de Ouanaminthe", "recus": 4, "manquants": 2, "retard": 0, "conformite": 11.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Dilaire", "recus": 4, "manquants": 2, "retard": 1, "conformite": 11.0, "months": {"Déc": {"FIN": "En retard", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Pilette", "recus": 6, "manquants": 0, "retard": 0, "conformite": 17.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CAL Carice", "recus": 7, "manquants": 0, "retard": 0, "conformite": 19.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CS Rose Bonite", "recus": 7, "manquants": 0, "retard": 0, "conformite": 19.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Perches", "recus": 7, "manquants": 0, "retard": 0, "conformite": 19.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CS de Cahesse", "recus": 2, "manquants": 1, "retard": 0, "conformite": 6.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "N/A"}, "Jan": {"FIN": "", "RH": "Manquant", "EPI": "N/A"}, "Fév": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Savane Longue", "recus": 7, "manquants": 0, "retard": 0, "conformite": 19.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Savane au Lait", "recus": 4, "manquants": 0, "retard": 0, "conformite": 11.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Ferrier", "recus": 5, "manquants": 1, "retard": 0, "conformite": 14.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Meillac", "recus": 3, "manquants": 1, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Manquant", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CAL de Mont-Organise", "recus": 7, "manquants": 0, "retard": 0, "conformite": 19.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Univers Centre Medical (privé)", "recus": 3, "manquants": 0, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "CS de Jacquezyl", "recus": 6, "manquants": 2, "retard": 0, "conformite": 17.0, "months": {"Déc": {"FIN": "Manquant", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Manquant", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "Reçu", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Disp NDL de Sainte Suzanne", "recus": 4, "manquants": 0, "retard": 0, "conformite": 11.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire Ste Suzanne", "recus": 4, "manquants": 0, "retard": 0, "conformite": 11.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Reçu", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Grosse-Roche", "recus": 6, "manquants": 0, "retard": 0, "conformite": 17.0, "months": {"Déc": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Fév": {"FIN": "Reçu", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Roche Plate", "recus": 3, "manquants": 1, "retard": 0, "conformite": 8.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Jan": {"FIN": "", "RH": "Manquant", "EPI": "Reçu"}, "Fév": {"FIN": "", "RH": "", "EPI": "Reçu"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Bois Poux", "recus": 0, "manquants": 0, "retard": 0, "conformite": 0.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "N/A"}, "Jan": {"FIN": "", "RH": "", "EPI": "N/A"}, "Fév": {"FIN": "", "RH": "", "EPI": "N/A"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}, {"inst": "Dispensaire de Corosse", "recus": 1, "manquants": 0, "retard": 0, "conformite": 3.0, "months": {"Déc": {"FIN": "", "RH": "", "EPI": "N/A"}, "Jan": {"FIN": "", "RH": "", "EPI": "N/A"}, "Fév": {"FIN": "", "RH": "Reçu", "EPI": "N/A"}, "Mar": {"FIN": "", "RH": "", "EPI": ""}, "Avr": {"FIN": "", "RH": "", "EPI": ""}, "Mai": {"FIN": "", "RH": "", "EPI": ""}, "Juin": {"FIN": "", "RH": "", "EPI": ""}, "Juil": {"FIN": "", "RH": "", "EPI": ""}, "Août": {"FIN": "", "RH": "", "EPI": ""}, "Sep": {"FIN": "", "RH": "", "EPI": ""}, "Oct": {"FIN": "", "RH": "", "EPI": ""}, "Nov": {"FIN": "", "RH": "", "EPI": ""}}}];
-
-const RP_MONTHS = ['Déc','Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov'];
-const RP_PROGS  = ['FIN','RH','EPI'];
-
-let rpRawData   = [];   // parsed rows
-let rpActiveProg = 'all';
-let rpBarChart  = null;
-
-/* ── STATUS CELL RENDERER ── */
-function rpCellStyle(val) {
-  const v = (val||'').trim().toLowerCase();
-  if (v === 'reçu' || v === 'recu')    return {bg:'#e6f4ec', color:'#1a7a4a', label:'✓'};
-  if (v === 'en retard')               return {bg:'#fff7e6', color:'#b45309', label:'⚠'};
-  if (v === 'manquant' || v === '')    return {bg:'#fdf0ef', color:'#c0392b', label:'✗'};
-  return {bg:'#f5f5f5', color:'#999', label:'·'};
-}
-
-/* ── LOAD DATA — embedded snapshot ── */
-function rpLoad() {
-  document.getElementById('rp-loading').style.display = 'none';
-  document.getElementById('rp-error').style.display = 'none';
-  rpRawData = RP_EMBEDDED;
-  rpRender();
-  document.getElementById('rp-last-updated').textContent =
-    'Données intégrées · Snapshot Avr 2026 · ' + rpRawData.length + ' institutions';
-}
-
-function rpShowError(msg) {
-  document.getElementById('rp-loading').style.display = 'none';
-  document.getElementById('rp-error').style.display   = 'block';
-  document.getElementById('rp-error-msg').textContent = msg;
-}
-
-/* ── PROCESS CSV ── */
-// Sheet column map (from actual published CSV structure):
-// Col 0 = row#, Col 1 = institution name
-// Per month: FIN=fracCol-3, RH=fracCol-2, EPI=fracCol-1
-// Fraction cols per month: Déc=6, Jan=10, Fév=14, Mar=18 ... (+4 per month)
-// Summary: col 51=Reçus, 52=Manquants, 53=Retard, 54=%Conformité
-const RP_FRAC_COLS = [6,10,14,18,22,26,30,34,38,42,46,50];
-
-function rpProcess(rows) {
-  rpRawData = [];
-  const skipNames = new Set(['','institution','total','légende','legende','dsne','fin','rh','epi']);
-
-  rows.forEach(row => {
-    const inst = (row[1] || '').trim();
-    if (!inst || skipNames.has(inst.toLowerCase())) return;
-    if (['déc','dec','jan','fév','feb','mois'].some(h => inst.toLowerCase().startsWith(h))) return;
-
-    const entry = { inst, months: {} };
-
-    RP_MONTHS.forEach((m, i) => {
-      const fc = RP_FRAC_COLS[i];
-      entry.months[m] = {
-        FIN: (row[fc-3] || '').trim(),
-        RH:  (row[fc-2] || '').trim(),
-        EPI: (row[fc-1] || '').trim(),
-      };
-    });
-
-    entry.recus      = parseInt(row[51]  || '0') || 0;
-    entry.manquants  = parseInt(row[52]  || '0') || 0;
-    entry.retard     = parseInt(row[53]  || '0') || 0;
-    entry.conformite = parseFloat((row[54] || '0').replace('%','')) || 0;
-
-    rpRawData.push(entry);
-  });
-
-  if (!rpRawData.length) {
-    rpShowError('Aucune donnée trouvée. Vérifiez que le fichier Google Sheets est publié en CSV.');
-    return;
-  }
-
-  rpRender();
-}
-
-/* ── RENDER ALL ── */
-function rpRender() {
-  try { rpRenderKPIs(); } catch(e) { console.error('KPI error:', e); }
-  try { rpRenderHeatmap(); } catch(e) { console.error('Heatmap error:', e); }
-  try { rpRenderBarChart(); } catch(e) { console.error('Chart error:', e); }
-  try { rpRenderInstTable(); } catch(e) { console.error('Table error:', e); }
-  document.getElementById('rp-loading').style.display = 'none';
-  document.getElementById('rp-heatmap-wrap').style.display = 'block';
-}
-
-/* ── KPIs ── */
-function rpRenderKPIs() {
-  const data = rpRawData;
-  const totalRecus     = data.reduce((s,d) => s + d.recus, 0);
-  const totalManquants = data.reduce((s,d) => s + d.manquants, 0);
-  const totalRetard    = data.reduce((s,d) => s + d.retard, 0);
-  const avgConf        = data.length ? Math.round(data.reduce((s,d) => s + d.conformite, 0) / data.length) : 0;
-  const moisCouverts   = RP_MONTHS.filter(m => {
-    return data.some(d => Object.values(d.months[m]||{}).some(v => v && v.trim()));
-  }).length;
-
-  document.getElementById('rp-total-inst').textContent  = data.length;
-  document.getElementById('rp-conformite').textContent  = avgConf + '%';
-  document.getElementById('rp-kpi-recus').textContent   = totalRecus;
-  document.getElementById('rp-kpi-manquants').textContent = totalManquants;
-  document.getElementById('rp-kpi-retard').textContent  = totalRetard;
-  document.getElementById('rp-kpi-mois').textContent    = moisCouverts;
-}
-
-/* ── HEATMAP ── */
-function rpRenderHeatmap() {
-  const progs = rpActiveProg === 'all' ? RP_PROGS : [rpActiveProg];
-  const tbl   = document.getElementById('rp-heatmap');
-  tbl.innerHTML = '';
-
-  // Header row 1: months
-  const thead = document.createElement('thead');
-  const tr1   = document.createElement('tr');
-  tr1.innerHTML = `<th rowspan="2" style="padding:8px 12px;text-align:left;background:var(--navy);color:rgba(255,255,255,.85);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;position:sticky;left:0;z-index:2;">Institution</th>`;
-  RP_MONTHS.forEach(m => {
-    tr1.innerHTML += `<th colspan="${progs.length}" style="padding:6px 4px;text-align:center;background:#162b52;color:rgba(255,255,255,.75);font-size:10px;font-weight:600;border-left:1px solid rgba(255,255,255,.1);">${m}</th>`;
-  });
-  thead.appendChild(tr1);
-
-  // Header row 2: FIN/RH/EPI sub-headers
-  const tr2 = document.createElement('tr');
-  RP_MONTHS.forEach(() => {
-    progs.forEach(p => {
-      const colors = {FIN:'#b8972a',RH:'#1a7a4a',EPI:'#0f5f8a'};
-      tr2.innerHTML += `<th style="padding:4px 6px;text-align:center;background:#1e3a6e;color:rgba(255,255,255,.65);font-size:9px;font-weight:700;letter-spacing:.08em;border-left:1px solid rgba(255,255,255,.06);min-width:28px;">${p}</th>`;
-    });
-  });
-  thead.appendChild(tr2);
-  tbl.appendChild(thead);
-
-  // Body
-  const tbody = document.createElement('tbody');
-  rpRawData.forEach((d, i) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td style="padding:7px 12px;font-size:12px;font-weight:500;color:var(--navy);white-space:nowrap;background:${i%2?'#fafafa':'#fff'};position:sticky;left:0;z-index:1;border-bottom:1px solid var(--border);">${escHtml(d.inst)}</td>`;
-    RP_MONTHS.forEach(m => {
-      progs.forEach(p => {
-        const val = (d.months[m]||{})[p] || '';
-        const s   = rpCellStyle(val);
-        tr.innerHTML += `<td title="${escHtml(d.inst)} · ${m} · ${p} : ${val||'—'}" style="text-align:center;padding:5px 3px;background:${s.bg};color:${s.color};font-weight:700;font-size:12px;border-left:1px solid rgba(0,0,0,.04);border-bottom:1px solid var(--border);">${s.label}</td>`;
-      });
-    });
-    tbody.appendChild(tr);
-  });
-  tbl.appendChild(tbody);
-
-  // Legend
-  const leg = document.createElement('caption');
-  leg.style.cssText = 'caption-side:bottom;padding:10px 0 0;text-align:left;font-size:11px;color:var(--text-muted);';
-  leg.innerHTML = `<span style="margin-right:14px"><span style="color:#1a7a4a;font-weight:700">✓</span> Reçu</span><span style="margin-right:14px"><span style="color:#b45309;font-weight:700">⚠</span> En retard</span><span style="margin-right:14px"><span style="color:#c0392b;font-weight:700">✗</span> Manquant</span>`;
-  tbl.appendChild(leg);
-}
-
-/* ── BAR CHART ── */
-function rpRenderBarChart() {
-  const progs = rpActiveProg === 'all' ? RP_PROGS : [rpActiveProg];
-  const labels = RP_MONTHS;
-
-  // For each month, compute % of cells that are "Reçu"
-  const datasets = progs.map(p => {
-    const colors = {FIN:'rgba(184,151,42,.8)',RH:'rgba(26,122,74,.8)',EPI:'rgba(15,95,138,.8)'};
-    const data = RP_MONTHS.map(m => {
-      let total = 0, recus = 0;
-      rpRawData.forEach(d => {
-        const v = ((d.months[m]||{})[p]||'').trim().toLowerCase();
-        total++;
-        if (v === 'reçu' || v === 'recu') recus++;
-      });
-      return total ? Math.round(recus/total*100) : 0;
-    });
-    return { label: p, data, backgroundColor: colors[p]||'#888', borderRadius: 4, borderSkipped: false };
-  });
-
-  const ctx = document.getElementById('rp-bar-chart').getContext('2d');
-  if (rpBarChart) rpBarChart.destroy();
-  rpBarChart = new Chart(ctx, {
-    type: 'bar',
-    data: { labels, datasets },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top', labels: { font: { size: 12 }, padding: 16 } },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label} : ${ctx.parsed.y}%` } }
-      },
-      scales: {
-        y: { min:0, max:100, ticks: { callback: v => v+'%', font:{size:11} }, grid: { color:'rgba(0,0,0,.05)' } },
-        x: { ticks: { font:{size:11} }, grid: { display:false } }
-      }
-    }
-  });
-}
-
-/* ── INSTITUTION TABLE ── */
-function rpRenderInstTable() {
-  const tbody = document.getElementById('rp-inst-tbody');
-  tbody.innerHTML = '';
-  const sorted = [...rpRawData].sort((a,b) => b.conformite - a.conformite);
-  sorted.forEach((d, i) => {
-    const pct   = d.conformite || 0;
-    const color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--orange)' : 'var(--red)';
-    const bg    = pct >= 80 ? '#e6f4ec'       : pct >= 50 ? '#fff7e6'       : '#fdf0ef';
-    const tr    = document.createElement('tr');
-    tr.style.background = i%2 ? '#fafafa' : '#fff';
-    tr.innerHTML = `
-      <td style="padding:10px 16px;font-weight:500;color:var(--navy);font-size:13px;border-bottom:1px solid var(--border);">${escHtml(d.inst)}</td>
-      <td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-weight:700;">${d.recus}</td>
-      <td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--red);font-weight:700;">${d.manquants}</td>
-      <td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--orange);font-weight:700;">${d.retard}</td>
-      <td style="padding:10px 16px;text-align:center;border-bottom:1px solid var(--border);">
-        <span style="background:${bg};color:${color};font-weight:700;font-size:12px;padding:3px 10px;border-radius:12px;">${pct}%</span>
-      </td>
-      <td style="padding:10px 16px;border-bottom:1px solid var(--border);">
-        <div style="background:#eee;border-radius:4px;height:8px;min-width:100px;">
-          <div style="width:${pct}%;background:${color};height:8px;border-radius:4px;transition:width .4s;"></div>
-        </div>
-      </td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-/* ── PROG FILTER ── */
-function rpSetProg(prog, el) {
-  rpActiveProg = prog;
-  document.querySelectorAll('#tab-rapportage .prog-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  if (rpRawData.length) {
-    rpRenderHeatmap();
-    rpRenderBarChart();
-  }
-}
-
 /* ── HELPERS ── */
 function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 /* ── AUTO-LOAD ── */
 document.addEventListener('DOMContentLoaded', function() {
-  try { rpLoad(); } catch(e) { console.error('rpLoad error:', e); }
   govInit();
 });
 
@@ -3079,7 +2566,7 @@ function renderDevChart() {
     PROJ_IDS.forEach(pid => {
       const phaseData = PHASES[0][pid].find(x => x.p === pname);
       const sc = phaseData.s;
-      const scColor = sc==="✓"?"#085041":sc==="→"?"#633806":sc==="~"?"#4a5568":"#7a1a1a";
+      const scColor = sc==="✓"?"#085041":sc==="→"?"#633806":sc==="~"?"#3d5a4d":"#7a1a1a";
       const scBg = sc==="✓"?"#E1F5EE":sc==="→"?"#FAEEDA":sc==="~"?"#F1EFE8":"#FCEBEB";
       html += `<div style="padding:7px 9px;border-right:0.5px solid var(--border);display:flex;flex-direction:column;gap:3px;">
         <span style="font-size:11px;font-weight:600;color:${scColor};background:${scBg};padding:1px 5px;border-radius:3px;width:fit-content;">${sc==="✓"?"Oui":sc==="→"?"En cours":sc==="~"?"Minimal":"Non"}</span>
@@ -3100,53 +2587,5 @@ renderDevChart();
 
 }
 </script>
-<!-- ══ GOUVERNANCE LOGIN MODAL ══ -->
-<div id="gov-login-overlay" style="display:none;position:fixed;inset:0;background:rgba(15,31,61,0.72);z-index:9999;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:12px;padding:40px 44px;width:100%;max-width:420px;box-shadow:0 12px 48px rgba(15,31,61,0.28);position:relative;">
-
-    <!-- Header -->
-    <div style="text-align:center;margin-bottom:28px;">
-      <div style="display:flex;flex-direction:column;width:30px;height:20px;border-radius:2px;overflow:hidden;margin:0 auto 12px;box-shadow:0 0 0 1px rgba(0,0,0,0.12);">
-        <div style="background:#00209F;flex:1;"></div>
-        <div style="background:#D21034;flex:1;"></div>
-      </div>
-      <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#b8972a;font-weight:600;margin-bottom:4px;">Accès Restreint</div>
-      <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:#0f1f3d;font-weight:600;">Gouvernance Institutionnelle</h3>
-      <p style="font-size:12px;color:#8a97ad;margin-top:6px;">Ce module est réservé au personnel autorisé.</p>
-    </div>
-
-    <!-- Fields -->
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div>
-        <label style="font-size:11px;font-weight:600;color:#4a5568;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:5px;">Nom complet</label>
-        <input id="gov-login-name" type="text" placeholder="Daisha Dorsainvil" onkeydown="govLoginKeydown(event)"
-          style="width:100%;padding:9px 12px;border:1px solid #dde2ec;border-radius:6px;font-size:13px;color:#1a2235;outline:none;font-family:'Source Sans 3',sans-serif;"
-          onfocus="this.style.borderColor='#b8972a'" onblur="this.style.borderColor='#dde2ec'"/>
-      </div>
-      <div>
-        <label style="font-size:11px;font-weight:600;color:#4a5568;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:5px;">Mot de passe</label>
-        <input id="gov-login-pass" type="password" placeholder="••••••" onkeydown="govLoginKeydown(event)"
-          style="width:100%;padding:9px 12px;border:1px solid #dde2ec;border-radius:6px;font-size:13px;color:#1a2235;outline:none;font-family:'Source Sans 3',sans-serif;"
-          onfocus="this.style.borderColor='#b8972a'" onblur="this.style.borderColor='#dde2ec'"/>
-      </div>
-      <div>
-        <label style="font-size:11px;font-weight:600;color:#4a5568;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:5px;">Question de sécurité — What are you?</label>
-        <input id="gov-login-ans" type="text" placeholder="Votre réponse" onkeydown="govLoginKeydown(event)"
-          style="width:100%;padding:9px 12px;border:1px solid #dde2ec;border-radius:6px;font-size:13px;color:#1a2235;outline:none;font-family:'Source Sans 3',sans-serif;"
-          onfocus="this.style.borderColor='#b8972a'" onblur="this.style.borderColor='#dde2ec'"/>
-      </div>
-    </div>
-
-    <!-- Error -->
-    <div id="gov-login-err" style="display:none;margin-top:12px;padding:8px 12px;background:#fef2f2;border:1px solid #fca5a5;border-radius:5px;font-size:12px;color:#c0392b;"></div>
-
-    <!-- Buttons -->
-    <div style="display:flex;gap:10px;margin-top:22px;">
-      <button onclick="govLoginCancel()" style="flex:1;padding:10px;border:1px solid #dde2ec;border-radius:6px;background:#fff;color:#4a5568;font-size:13px;cursor:pointer;font-family:'Source Sans 3',sans-serif;">Annuler</button>
-      <button onclick="govLoginSubmit()" style="flex:2;padding:10px;border:none;border-radius:6px;background:#0f1f3d;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;letter-spacing:.03em;">Accéder →</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
