@@ -786,7 +786,7 @@ const DEFAULTS = {
   periode:"2025-2026",
   population:"430 925 habitants",
   institutions:[
-    {id:1,nom:"Hôpital Départemental de Fort-Liberté (HFL)",type:"Hôpital Départemental",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"Consultation générale, CPN/CPoN, pédiatrie, odontologie, orthopédie, chirurgie, médecine interne, labo, urgences, maternité, VIH, pharmacie, morgue, santé communautaire",rh:"2 sonographistes · 1 urgentiste · 2 ophtalmologues · 1 odontologue · 2 médecins famille · 5 généralistes · 6 personnels surface",partenaire:"MDM Argentine · FHI 360 (MNCH, dès oct. 2026)",statut:"Actif",sourceDate:"Liste DM/ADM DSNE; EDL-PPS/2025 (Juin 2025)",lat:19.667,lng:-71.833,dm:"Dr Henry Claude Etienne"},
+    {id:1,nom:"Hôpital Universitaire de Fort-Liberté (HUFL)",type:"Hôpital Universitaire",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"Urgences, maternité, médecine interne, chirurgie, néonatologie, orthopédie, santé communautaire, pharmacie, laboratoire",rh:"327 employés (Sept. 2026) : 102 auxiliaires-infirmières · 44 infirmières · 27 ASCP · 22 archivistes · 19 médecins spécialistes · 19 techniciens de labo · 15 ménagères · 12 agents de sécurité · 10 médecins généralistes · 10 personnels d'entretien · 8 infirmières spécialisées · 6 administratifs · autres fonctions (pharmacie, caisse, psychologie, comptabilité, etc.)",partenaire:"MDM Argentine · FHI 360 (MNCH, dès oct. 2026)",statut:"Actif",sourceDate:"Rapport RH HUFL (Oct. 2026)",lat:19.667,lng:-71.833,dm:"Dr Henry Claude Etienne"},
     {id:2,nom:"CDAI Fort-Liberté",type:"Centre Spécialisé",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"À compléter",rh:"À compléter",partenaire:"-",statut:"Actif",sourceDate:"Liste DM/ADM DSNE",lat:19.668,lng:-71.836,dm:"Dr Brunel Augustin"},
     {id:3,nom:"CCS Dérac",type:"CCS",uas:"Fort-Liberté",commune:"Fort-Liberté",services:"Consultation générale, CPN/CPoN, sonographie, accouchement, santé communautaire, malaria, TB, nutrition",rh:"À compléter",partenaire:"-",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.651,lng:-71.879,dm:"Dr Rivelino Joseph"},
     {id:4,nom:"CCS Meillac",type:"CCS",uas:"Fort-Liberté",commune:"Meillac",services:"Consultation générale, CPN/CPoN, labo, sonographie, accouchement, santé communautaire, malaria, TB, urgences",rh:"2 chauffeurs · 1 sage-femme",partenaire:"-",statut:"Actif",sourceDate:"EDL-PPS/2025 (Juin 2025)",lat:19.580,lng:-71.921,dm:"Dr Francisque Severe"},
@@ -930,10 +930,10 @@ function lockView(){
   root.classList.remove('edit-on');
   root.querySelectorAll('[contenteditable]').forEach(e=>e.removeAttribute('contenteditable'));
 }
-function load(){try{const r=canEdit()?localStorage.getItem('eldl_ne_v7'):null;D=r?JSON.parse(r):deepClone(DEFAULTS)}catch(e){D=deepClone(DEFAULTS)}}
-function save(){if(!canEdit())return;D.savedAt=new Date().toISOString();try{localStorage.setItem('eldl_ne_v7',JSON.stringify(D))}catch(e){}flashSave();updateTs()}
+function load(){try{const r=canEdit()?localStorage.getItem('eldl_ne_v8'):null;D=r?JSON.parse(r):deepClone(DEFAULTS)}catch(e){D=deepClone(DEFAULTS)}}
+function save(){if(!canEdit())return;D.savedAt=new Date().toISOString();try{localStorage.setItem('eldl_ne_v8',JSON.stringify(D))}catch(e){}flashSave();updateTs()}
 function deepClone(o){return JSON.parse(JSON.stringify(o))}
-function confirmReset(){if(confirm('Réinitialiser toutes les données aux valeurs par défaut ?')){localStorage.removeItem('eldl_ne_v7');D=deepClone(DEFAULTS);renderAll();initMap()}}
+function confirmReset(){if(confirm('Réinitialiser toutes les données aux valeurs par défaut ?')){localStorage.removeItem('eldl_ne_v8');D=deepClone(DEFAULTS);renderAll();initMap()}}
 function flashSave(){const e=document.getElementById('saveFlash');e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
 function updateTs(){const e=document.getElementById('tsDisplay');if(!D||!D.savedAt)return;const d=new Date(D.savedAt);e.textContent='Mis à jour le '+d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
 function onBlur(k,el){D[k]=el.textContent.trim();save()}
