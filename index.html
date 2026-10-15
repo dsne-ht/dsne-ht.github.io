@@ -478,6 +478,9 @@
 .edl-scope td {padding:.6rem .8rem;border-bottom:1px solid var(--cream-dark);vertical-align:top;font-size:.81rem}
 .edl-scope tr:last-child td {border-bottom:none}
 .edl-scope tr:hover td {background:#fafaf7}
+/* ── Lecture seule pour les visiteurs ── */
+.edl-scope:not(.edit-on) .section-actions, .edl-scope:not(.edit-on) .btn-ghost, .edl-scope:not(.edit-on) .btn-danger {display:none !important}
+.edl-scope:not(.edit-on) [contenteditable]{cursor:default}
 .edl-scope [contenteditable] {cursor:text;min-width:12px;display:inline-block}
 .edl-scope [contenteditable]:hover {background:rgba(0,60,120,.04);border-radius:2px}
 .edl-scope [contenteditable]:focus {outline:2px solid #0d7a8a;outline-offset:1px;border-radius:2px;background:#eef3fc}
@@ -907,8 +910,29 @@ const DEFAULTS = {
 
 /* ═══ STATE ═══ */
 let D, activeFilter='all';
-function load(){try{const r=localStorage.getItem('eldl_ne_v7');D=r?JSON.parse(r):deepClone(DEFAULTS)}catch(e){D=deepClone(DEFAULTS)}}
-function save(){D.savedAt=new Date().toISOString();try{localStorage.setItem('eldl_ne_v7',JSON.stringify(D))}catch(e){}flashSave();updateTs()}
+/* ═══ ACCÈS EN MODIFICATION (réservé à la Direction) ═══ */
+const EDIT_HASH="8509c663f3495e052ee93ee27d2736de1576793bcedc3b6e1a1f216bcaea23a7";
+function canEdit(){try{return localStorage.getItem('dsne_edit_ok')===EDIT_HASH}catch(e){return false}}
+(async function(){
+  try{
+    const u=new URL(location.href), p=u.searchParams.get('edit');
+    if(p!==null){
+      const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));
+      const h=Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+      if(h===EDIT_HASH) localStorage.setItem('dsne_edit_ok',EDIT_HASH);
+      u.searchParams.delete('edit'); location.replace(u.toString());
+    }
+    if(u.searchParams.get('lock')!==null){localStorage.removeItem('dsne_edit_ok');u.searchParams.delete('lock');location.replace(u.toString())}
+  }catch(e){}
+})();
+function lockView(){
+  const root=document.querySelector('.edl-scope'); if(!root) return;
+  if(canEdit()){root.classList.add('edit-on');return}
+  root.classList.remove('edit-on');
+  root.querySelectorAll('[contenteditable]').forEach(e=>e.removeAttribute('contenteditable'));
+}
+function load(){try{const r=canEdit()?localStorage.getItem('eldl_ne_v7'):null;D=r?JSON.parse(r):deepClone(DEFAULTS)}catch(e){D=deepClone(DEFAULTS)}}
+function save(){if(!canEdit())return;D.savedAt=new Date().toISOString();try{localStorage.setItem('eldl_ne_v7',JSON.stringify(D))}catch(e){}flashSave();updateTs()}
 function deepClone(o){return JSON.parse(JSON.stringify(o))}
 function confirmReset(){if(confirm('Réinitialiser toutes les données aux valeurs par défaut ?')){localStorage.removeItem('eldl_ne_v7');D=deepClone(DEFAULTS);renderAll();initMap()}}
 function flashSave(){const e=document.getElementById('saveFlash');e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
@@ -1156,7 +1180,7 @@ function renderAll(){
   renderStats();updateTs();
 }
 
-load();renderAll();
+load();renderAll();lockView();new MutationObserver(()=>{if(!canEdit())lockView()}).observe(document.querySelector('.edl-scope'),{childList:true,subtree:true});
 window.addEventListener('load',initMap);
 </script>
 
